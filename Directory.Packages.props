@@ -2,7 +2,15 @@
 
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+
+    <!--
+      Transitive pinning is deliberately OFF. It promotes any transitive package that has a
+      PackageVersion entry here into a *direct* dependency of the produced package — which put
+      Microsoft.Extensions.DependencyInjection into EFactura.Net.Client's nuspec purely because the
+      samples project uses it. A published library must declare exactly what it references and
+      nothing more, so consumers are not over-constrained.
+    -->
+    <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
 
   <ItemGroup Label="Build / packaging">

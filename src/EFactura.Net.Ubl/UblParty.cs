@@ -9,11 +9,15 @@ public sealed record UblParty
     public required string Name { get; init; }
 
     /// <summary>
-    /// VAT identifier (BT-31 / BT-48), for example <c>"RO12345678"</c>.
+    /// VAT identifier (BT-31 / BT-48), for example <c>"RO12345674"</c>.
     /// </summary>
     /// <remarks>
     /// Normalized on write: trimmed, upper-cased, inner spaces removed, and prefixed with <c>RO</c>
     /// if absent. Pass it with or without the prefix.
+    /// <para>
+    /// ANAF validates the Romanian check digit, so an invented identifier usually fails — a
+    /// rejection reported as <c>ERRIdentif: CUI cumparator incorect</c>.
+    /// </para>
     /// </remarks>
     public required string VatIdentifier { get; init; }
 
