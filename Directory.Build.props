@@ -21,7 +21,7 @@
 
   <PropertyGroup>
     <Authors>Andrei Samoila</Authors>
-    <Company>Samtech Labs SRL</Company>
+    <Company>Andrei Samoila</Company>
     <Copyright>Copyright (c) Andrei Samoila</Copyright>
     <RepositoryUrl>https://github.com/andreisamoila74/EFactura.Net</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

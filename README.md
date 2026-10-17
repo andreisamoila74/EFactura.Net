@@ -32,4 +32,4 @@ Documentation, samples and the full feature list land before `0.1.0`.
 
 ## License
 
-[MIT](LICENSE) © Samtech Labs SRL
+[MIT](LICENSE) © Andrei Samoila
