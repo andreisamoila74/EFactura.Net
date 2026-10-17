@@ -1,1 +1,256 @@
 #nullable enable
+EFactura.Net.Ubl.RomanianAddress
+EFactura.Net.Ubl.UblAddress
+EFactura.Net.Ubl.UblAddress.<Clone>$() -> EFactura.Net.Ubl.UblAddress!
+EFactura.Net.Ubl.UblAddress.CityName.get -> string?
+EFactura.Net.Ubl.UblAddress.CityName.init -> void
+EFactura.Net.Ubl.UblAddress.CountryCode.get -> string!
+EFactura.Net.Ubl.UblAddress.CountryCode.init -> void
+EFactura.Net.Ubl.UblAddress.CountrySubdivision.get -> string?
+EFactura.Net.Ubl.UblAddress.CountrySubdivision.init -> void
+EFactura.Net.Ubl.UblAddress.Equals(EFactura.Net.Ubl.UblAddress? other) -> bool
+EFactura.Net.Ubl.UblAddress.StreetName.get -> string?
+EFactura.Net.Ubl.UblAddress.StreetName.init -> void
+EFactura.Net.Ubl.UblAddress.UblAddress() -> void
+EFactura.Net.Ubl.UblBankAccount
+EFactura.Net.Ubl.UblBankAccount.<Clone>$() -> EFactura.Net.Ubl.UblBankAccount!
+EFactura.Net.Ubl.UblBankAccount.BankName.get -> string?
+EFactura.Net.Ubl.UblBankAccount.BankName.init -> void
+EFactura.Net.Ubl.UblBankAccount.Equals(EFactura.Net.Ubl.UblBankAccount? other) -> bool
+EFactura.Net.Ubl.UblBankAccount.Iban.get -> string!
+EFactura.Net.Ubl.UblBankAccount.Iban.init -> void
+EFactura.Net.Ubl.UblBankAccount.UblBankAccount() -> void
+EFactura.Net.Ubl.UblCreditNote
+EFactura.Net.Ubl.UblCreditNote.CreditNoteTypeCode.get -> string!
+EFactura.Net.Ubl.UblCreditNote.CreditNoteTypeCode.init -> void
+EFactura.Net.Ubl.UblCreditNote.Equals(EFactura.Net.Ubl.UblCreditNote? other) -> bool
+EFactura.Net.Ubl.UblCreditNote.PrecedingInvoice.get -> EFactura.Net.Ubl.UblDocumentReference!
+EFactura.Net.Ubl.UblCreditNote.PrecedingInvoice.init -> void
+EFactura.Net.Ubl.UblCreditNote.UblCreditNote() -> void
+EFactura.Net.Ubl.UblDocument
+EFactura.Net.Ubl.UblDocument.Buyer.get -> EFactura.Net.Ubl.UblParty!
+EFactura.Net.Ubl.UblDocument.Buyer.init -> void
+EFactura.Net.Ubl.UblDocument.BuyerReference.get -> string?
+EFactura.Net.Ubl.UblDocument.BuyerReference.init -> void
+EFactura.Net.Ubl.UblDocument.CurrencyCode.get -> string!
+EFactura.Net.Ubl.UblDocument.CurrencyCode.init -> void
+EFactura.Net.Ubl.UblDocument.DocumentId.get -> string!
+EFactura.Net.Ubl.UblDocument.DocumentId.init -> void
+EFactura.Net.Ubl.UblDocument.IssueDate.get -> System.DateOnly
+EFactura.Net.Ubl.UblDocument.IssueDate.init -> void
+EFactura.Net.Ubl.UblDocument.Lines.get -> System.Collections.Generic.IReadOnlyList<EFactura.Net.Ubl.UblLine!>!
+EFactura.Net.Ubl.UblDocument.Lines.init -> void
+EFactura.Net.Ubl.UblDocument.Note.get -> string?
+EFactura.Net.Ubl.UblDocument.Note.init -> void
+EFactura.Net.Ubl.UblDocument.PaymentMeans.get -> EFactura.Net.Ubl.UblPaymentMeans?
+EFactura.Net.Ubl.UblDocument.PaymentMeans.init -> void
+EFactura.Net.Ubl.UblDocument.Seller.get -> EFactura.Net.Ubl.UblParty!
+EFactura.Net.Ubl.UblDocument.Seller.init -> void
+EFactura.Net.Ubl.UblDocument.TaxCurrencyCode.get -> string?
+EFactura.Net.Ubl.UblDocument.TaxCurrencyCode.init -> void
+EFactura.Net.Ubl.UblDocument.TaxExchangeRate.get -> decimal?
+EFactura.Net.Ubl.UblDocument.TaxExchangeRate.init -> void
+EFactura.Net.Ubl.UblDocument.UblDocument(EFactura.Net.Ubl.UblDocument! original) -> void
+EFactura.Net.Ubl.UblDocumentReference
+EFactura.Net.Ubl.UblDocumentReference.<Clone>$() -> EFactura.Net.Ubl.UblDocumentReference!
+EFactura.Net.Ubl.UblDocumentReference.DocumentId.get -> string!
+EFactura.Net.Ubl.UblDocumentReference.DocumentId.init -> void
+EFactura.Net.Ubl.UblDocumentReference.Equals(EFactura.Net.Ubl.UblDocumentReference? other) -> bool
+EFactura.Net.Ubl.UblDocumentReference.IssueDate.get -> System.DateOnly?
+EFactura.Net.Ubl.UblDocumentReference.IssueDate.init -> void
+EFactura.Net.Ubl.UblDocumentReference.UblDocumentReference() -> void
+EFactura.Net.Ubl.UblInvoice
+EFactura.Net.Ubl.UblInvoice.DueDate.get -> System.DateOnly?
+EFactura.Net.Ubl.UblInvoice.DueDate.init -> void
+EFactura.Net.Ubl.UblInvoice.Equals(EFactura.Net.Ubl.UblInvoice? other) -> bool
+EFactura.Net.Ubl.UblInvoice.InvoiceTypeCode.get -> string!
+EFactura.Net.Ubl.UblInvoice.InvoiceTypeCode.init -> void
+EFactura.Net.Ubl.UblInvoice.UblInvoice() -> void
+EFactura.Net.Ubl.UblLine
+EFactura.Net.Ubl.UblLine.<Clone>$() -> EFactura.Net.Ubl.UblLine!
+EFactura.Net.Ubl.UblLine.Description.get -> string?
+EFactura.Net.Ubl.UblLine.Description.init -> void
+EFactura.Net.Ubl.UblLine.Equals(EFactura.Net.Ubl.UblLine? other) -> bool
+EFactura.Net.Ubl.UblLine.Name.get -> string!
+EFactura.Net.Ubl.UblLine.Name.init -> void
+EFactura.Net.Ubl.UblLine.Quantity.get -> decimal
+EFactura.Net.Ubl.UblLine.Quantity.init -> void
+EFactura.Net.Ubl.UblLine.TaxCategory.get -> EFactura.Net.Ubl.UblTaxCategory
+EFactura.Net.Ubl.UblLine.TaxCategory.init -> void
+EFactura.Net.Ubl.UblLine.TaxRate.get -> decimal
+EFactura.Net.Ubl.UblLine.TaxRate.init -> void
+EFactura.Net.Ubl.UblLine.UblLine() -> void
+EFactura.Net.Ubl.UblLine.Unit.get -> string?
+EFactura.Net.Ubl.UblLine.Unit.init -> void
+EFactura.Net.Ubl.UblLine.UnitPrice.get -> decimal
+EFactura.Net.Ubl.UblLine.UnitPrice.init -> void
+EFactura.Net.Ubl.UblParty
+EFactura.Net.Ubl.UblParty.<Clone>$() -> EFactura.Net.Ubl.UblParty!
+EFactura.Net.Ubl.UblParty.Address.get -> EFactura.Net.Ubl.UblAddress!
+EFactura.Net.Ubl.UblParty.Address.init -> void
+EFactura.Net.Ubl.UblParty.Equals(EFactura.Net.Ubl.UblParty? other) -> bool
+EFactura.Net.Ubl.UblParty.IsVatRegistered.get -> bool
+EFactura.Net.Ubl.UblParty.IsVatRegistered.init -> void
+EFactura.Net.Ubl.UblParty.LegalRegistrationId.get -> string?
+EFactura.Net.Ubl.UblParty.LegalRegistrationId.init -> void
+EFactura.Net.Ubl.UblParty.Name.get -> string!
+EFactura.Net.Ubl.UblParty.Name.init -> void
+EFactura.Net.Ubl.UblParty.UblParty() -> void
+EFactura.Net.Ubl.UblParty.VatIdentifier.get -> string!
+EFactura.Net.Ubl.UblParty.VatIdentifier.init -> void
+EFactura.Net.Ubl.UblPaymentMeans
+EFactura.Net.Ubl.UblPaymentMeans.<Clone>$() -> EFactura.Net.Ubl.UblPaymentMeans!
+EFactura.Net.Ubl.UblPaymentMeans.Equals(EFactura.Net.Ubl.UblPaymentMeans? other) -> bool
+EFactura.Net.Ubl.UblPaymentMeans.PayeeAccount.get -> EFactura.Net.Ubl.UblBankAccount?
+EFactura.Net.Ubl.UblPaymentMeans.PayeeAccount.init -> void
+EFactura.Net.Ubl.UblPaymentMeans.PaymentMeansCode.get -> string!
+EFactura.Net.Ubl.UblPaymentMeans.PaymentMeansCode.init -> void
+EFactura.Net.Ubl.UblPaymentMeans.UblPaymentMeans() -> void
+EFactura.Net.Ubl.UblTaxCategory
+EFactura.Net.Ubl.UblTaxCategory.Exempt = 3 -> EFactura.Net.Ubl.UblTaxCategory
+EFactura.Net.Ubl.UblTaxCategory.Export = 6 -> EFactura.Net.Ubl.UblTaxCategory
+EFactura.Net.Ubl.UblTaxCategory.IntraCommunity = 5 -> EFactura.Net.Ubl.UblTaxCategory
+EFactura.Net.Ubl.UblTaxCategory.NotSubject = 4 -> EFactura.Net.Ubl.UblTaxCategory
+EFactura.Net.Ubl.UblTaxCategory.ReverseCharge = 2 -> EFactura.Net.Ubl.UblTaxCategory
+EFactura.Net.Ubl.UblTaxCategory.StandardRate = 0 -> EFactura.Net.Ubl.UblTaxCategory
+EFactura.Net.Ubl.UblTaxCategory.ZeroRated = 1 -> EFactura.Net.Ubl.UblTaxCategory
+EFactura.Net.Ubl.UblTaxSubtotal
+EFactura.Net.Ubl.UblTaxSubtotal.<Clone>$() -> EFactura.Net.Ubl.UblTaxSubtotal!
+EFactura.Net.Ubl.UblTaxSubtotal.Category.get -> EFactura.Net.Ubl.UblTaxCategory
+EFactura.Net.Ubl.UblTaxSubtotal.Category.init -> void
+EFactura.Net.Ubl.UblTaxSubtotal.Equals(EFactura.Net.Ubl.UblTaxSubtotal? other) -> bool
+EFactura.Net.Ubl.UblTaxSubtotal.Percent.get -> decimal
+EFactura.Net.Ubl.UblTaxSubtotal.Percent.init -> void
+EFactura.Net.Ubl.UblTaxSubtotal.TaxAmount.get -> decimal
+EFactura.Net.Ubl.UblTaxSubtotal.TaxAmount.init -> void
+EFactura.Net.Ubl.UblTaxSubtotal.TaxableAmount.get -> decimal
+EFactura.Net.Ubl.UblTaxSubtotal.TaxableAmount.init -> void
+EFactura.Net.Ubl.UblTaxSubtotal.UblTaxSubtotal() -> void
+EFactura.Net.Ubl.UblTotals
+EFactura.Net.Ubl.UblTotalsResult
+EFactura.Net.Ubl.UblTotalsResult.<Clone>$() -> EFactura.Net.Ubl.UblTotalsResult!
+EFactura.Net.Ubl.UblTotalsResult.Equals(EFactura.Net.Ubl.UblTotalsResult? other) -> bool
+EFactura.Net.Ubl.UblTotalsResult.LineExtensionAmount.get -> decimal
+EFactura.Net.Ubl.UblTotalsResult.LineExtensionAmount.init -> void
+EFactura.Net.Ubl.UblTotalsResult.PayableAmount.get -> decimal
+EFactura.Net.Ubl.UblTotalsResult.PayableAmount.init -> void
+EFactura.Net.Ubl.UblTotalsResult.TaxAmount.get -> decimal
+EFactura.Net.Ubl.UblTotalsResult.TaxAmount.init -> void
+EFactura.Net.Ubl.UblTotalsResult.TaxExclusiveAmount.get -> decimal
+EFactura.Net.Ubl.UblTotalsResult.TaxExclusiveAmount.init -> void
+EFactura.Net.Ubl.UblTotalsResult.TaxInclusiveAmount.get -> decimal
+EFactura.Net.Ubl.UblTotalsResult.TaxInclusiveAmount.init -> void
+EFactura.Net.Ubl.UblTotalsResult.TaxSubtotals.get -> System.Collections.Generic.IReadOnlyList<EFactura.Net.Ubl.UblTaxSubtotal!>!
+EFactura.Net.Ubl.UblTotalsResult.TaxSubtotals.init -> void
+EFactura.Net.Ubl.UblTotalsResult.UblTotalsResult() -> void
+EFactura.Net.Ubl.UblUnitCodes
+EFactura.Net.Ubl.UblValidationException
+EFactura.Net.Ubl.UblValidationException.Errors.get -> System.Collections.Generic.IReadOnlyList<string!>!
+EFactura.Net.Ubl.UblValidationException.UblValidationException(System.Collections.Generic.IReadOnlyList<string!>! errors) -> void
+EFactura.Net.Ubl.UblValidationException.UblValidationException(string! message) -> void
+EFactura.Net.Ubl.UblValidationException.UblValidationException(string! message, System.Exception! innerException) -> void
+EFactura.Net.Ubl.UblWriteOptions
+EFactura.Net.Ubl.UblWriteOptions.<Clone>$() -> EFactura.Net.Ubl.UblWriteOptions!
+EFactura.Net.Ubl.UblWriteOptions.CustomizationId.get -> string!
+EFactura.Net.Ubl.UblWriteOptions.CustomizationId.init -> void
+EFactura.Net.Ubl.UblWriteOptions.Equals(EFactura.Net.Ubl.UblWriteOptions? other) -> bool
+EFactura.Net.Ubl.UblWriteOptions.IncludeXmlDeclaration.get -> bool
+EFactura.Net.Ubl.UblWriteOptions.IncludeXmlDeclaration.init -> void
+EFactura.Net.Ubl.UblWriteOptions.Indent.get -> bool
+EFactura.Net.Ubl.UblWriteOptions.Indent.init -> void
+EFactura.Net.Ubl.UblWriteOptions.StrictAddressValidation.get -> bool
+EFactura.Net.Ubl.UblWriteOptions.StrictAddressValidation.init -> void
+EFactura.Net.Ubl.UblWriteOptions.UblVersionId.get -> string!
+EFactura.Net.Ubl.UblWriteOptions.UblVersionId.init -> void
+EFactura.Net.Ubl.UblWriteOptions.UblWriteOptions() -> void
+EFactura.Net.Ubl.UblWriter
+abstract EFactura.Net.Ubl.UblDocument.<Clone>$() -> EFactura.Net.Ubl.UblDocument!
+const EFactura.Net.Ubl.RomanianAddress.FallbackCountyCode = "RO-B" -> string!
+const EFactura.Net.Ubl.UblTotals.MonetaryDecimals = 2 -> int
+const EFactura.Net.Ubl.UblUnitCodes.Day = "DAY" -> string!
+const EFactura.Net.Ubl.UblUnitCodes.Default = "H87" -> string!
+const EFactura.Net.Ubl.UblUnitCodes.Hour = "HUR" -> string!
+const EFactura.Net.Ubl.UblUnitCodes.Kilogram = "KGM" -> string!
+const EFactura.Net.Ubl.UblUnitCodes.Litre = "LTR" -> string!
+const EFactura.Net.Ubl.UblUnitCodes.Metre = "MTR" -> string!
+const EFactura.Net.Ubl.UblUnitCodes.Month = "MON" -> string!
+const EFactura.Net.Ubl.UblUnitCodes.Piece = "H87" -> string!
+const EFactura.Net.Ubl.UblUnitCodes.Set = "SET" -> string!
+const EFactura.Net.Ubl.UblUnitCodes.SquareMetre = "MTK" -> string!
+const EFactura.Net.Ubl.UblUnitCodes.Unit = "C62" -> string!
+override EFactura.Net.Ubl.UblAddress.Equals(object? obj) -> bool
+override EFactura.Net.Ubl.UblAddress.GetHashCode() -> int
+override EFactura.Net.Ubl.UblAddress.ToString() -> string!
+override EFactura.Net.Ubl.UblBankAccount.Equals(object? obj) -> bool
+override EFactura.Net.Ubl.UblBankAccount.GetHashCode() -> int
+override EFactura.Net.Ubl.UblBankAccount.ToString() -> string!
+override EFactura.Net.Ubl.UblCreditNote.<Clone>$() -> EFactura.Net.Ubl.UblCreditNote!
+override EFactura.Net.Ubl.UblCreditNote.Equals(object? obj) -> bool
+override EFactura.Net.Ubl.UblCreditNote.GetHashCode() -> int
+override EFactura.Net.Ubl.UblCreditNote.ToString() -> string!
+override EFactura.Net.Ubl.UblDocument.Equals(object? obj) -> bool
+override EFactura.Net.Ubl.UblDocument.GetHashCode() -> int
+override EFactura.Net.Ubl.UblDocument.ToString() -> string!
+override EFactura.Net.Ubl.UblDocumentReference.Equals(object? obj) -> bool
+override EFactura.Net.Ubl.UblDocumentReference.GetHashCode() -> int
+override EFactura.Net.Ubl.UblDocumentReference.ToString() -> string!
+override EFactura.Net.Ubl.UblInvoice.<Clone>$() -> EFactura.Net.Ubl.UblInvoice!
+override EFactura.Net.Ubl.UblInvoice.Equals(object? obj) -> bool
+override EFactura.Net.Ubl.UblInvoice.GetHashCode() -> int
+override EFactura.Net.Ubl.UblInvoice.ToString() -> string!
+override EFactura.Net.Ubl.UblLine.Equals(object? obj) -> bool
+override EFactura.Net.Ubl.UblLine.GetHashCode() -> int
+override EFactura.Net.Ubl.UblLine.ToString() -> string!
+override EFactura.Net.Ubl.UblParty.Equals(object? obj) -> bool
+override EFactura.Net.Ubl.UblParty.GetHashCode() -> int
+override EFactura.Net.Ubl.UblParty.ToString() -> string!
+override EFactura.Net.Ubl.UblPaymentMeans.Equals(object? obj) -> bool
+override EFactura.Net.Ubl.UblPaymentMeans.GetHashCode() -> int
+override EFactura.Net.Ubl.UblPaymentMeans.ToString() -> string!
+override EFactura.Net.Ubl.UblTaxSubtotal.Equals(object? obj) -> bool
+override EFactura.Net.Ubl.UblTaxSubtotal.GetHashCode() -> int
+override EFactura.Net.Ubl.UblTaxSubtotal.ToString() -> string!
+override EFactura.Net.Ubl.UblTotalsResult.Equals(object? obj) -> bool
+override EFactura.Net.Ubl.UblTotalsResult.GetHashCode() -> int
+override EFactura.Net.Ubl.UblTotalsResult.ToString() -> string!
+override EFactura.Net.Ubl.UblWriteOptions.Equals(object? obj) -> bool
+override EFactura.Net.Ubl.UblWriteOptions.GetHashCode() -> int
+override EFactura.Net.Ubl.UblWriteOptions.ToString() -> string!
+override sealed EFactura.Net.Ubl.UblCreditNote.Equals(EFactura.Net.Ubl.UblDocument? other) -> bool
+override sealed EFactura.Net.Ubl.UblInvoice.Equals(EFactura.Net.Ubl.UblDocument? other) -> bool
+static EFactura.Net.Ubl.RomanianAddress.NormalizeCityName(string? city) -> string!
+static EFactura.Net.Ubl.RomanianAddress.ToCountyCode(string? countyName) -> string!
+static EFactura.Net.Ubl.RomanianAddress.TryToCountyCode(string? countyName, out string! code) -> bool
+static EFactura.Net.Ubl.UblAddress.operator !=(EFactura.Net.Ubl.UblAddress? left, EFactura.Net.Ubl.UblAddress? right) -> bool
+static EFactura.Net.Ubl.UblAddress.operator ==(EFactura.Net.Ubl.UblAddress? left, EFactura.Net.Ubl.UblAddress? right) -> bool
+static EFactura.Net.Ubl.UblBankAccount.operator !=(EFactura.Net.Ubl.UblBankAccount? left, EFactura.Net.Ubl.UblBankAccount? right) -> bool
+static EFactura.Net.Ubl.UblBankAccount.operator ==(EFactura.Net.Ubl.UblBankAccount? left, EFactura.Net.Ubl.UblBankAccount? right) -> bool
+static EFactura.Net.Ubl.UblCreditNote.operator !=(EFactura.Net.Ubl.UblCreditNote? left, EFactura.Net.Ubl.UblCreditNote? right) -> bool
+static EFactura.Net.Ubl.UblCreditNote.operator ==(EFactura.Net.Ubl.UblCreditNote? left, EFactura.Net.Ubl.UblCreditNote? right) -> bool
+static EFactura.Net.Ubl.UblDocument.operator !=(EFactura.Net.Ubl.UblDocument? left, EFactura.Net.Ubl.UblDocument? right) -> bool
+static EFactura.Net.Ubl.UblDocument.operator ==(EFactura.Net.Ubl.UblDocument? left, EFactura.Net.Ubl.UblDocument? right) -> bool
+static EFactura.Net.Ubl.UblDocumentReference.operator !=(EFactura.Net.Ubl.UblDocumentReference? left, EFactura.Net.Ubl.UblDocumentReference? right) -> bool
+static EFactura.Net.Ubl.UblDocumentReference.operator ==(EFactura.Net.Ubl.UblDocumentReference? left, EFactura.Net.Ubl.UblDocumentReference? right) -> bool
+static EFactura.Net.Ubl.UblInvoice.operator !=(EFactura.Net.Ubl.UblInvoice? left, EFactura.Net.Ubl.UblInvoice? right) -> bool
+static EFactura.Net.Ubl.UblInvoice.operator ==(EFactura.Net.Ubl.UblInvoice? left, EFactura.Net.Ubl.UblInvoice? right) -> bool
+static EFactura.Net.Ubl.UblLine.operator !=(EFactura.Net.Ubl.UblLine? left, EFactura.Net.Ubl.UblLine? right) -> bool
+static EFactura.Net.Ubl.UblLine.operator ==(EFactura.Net.Ubl.UblLine? left, EFactura.Net.Ubl.UblLine? right) -> bool
+static EFactura.Net.Ubl.UblParty.operator !=(EFactura.Net.Ubl.UblParty? left, EFactura.Net.Ubl.UblParty? right) -> bool
+static EFactura.Net.Ubl.UblParty.operator ==(EFactura.Net.Ubl.UblParty? left, EFactura.Net.Ubl.UblParty? right) -> bool
+static EFactura.Net.Ubl.UblPaymentMeans.operator !=(EFactura.Net.Ubl.UblPaymentMeans? left, EFactura.Net.Ubl.UblPaymentMeans? right) -> bool
+static EFactura.Net.Ubl.UblPaymentMeans.operator ==(EFactura.Net.Ubl.UblPaymentMeans? left, EFactura.Net.Ubl.UblPaymentMeans? right) -> bool
+static EFactura.Net.Ubl.UblTaxSubtotal.operator !=(EFactura.Net.Ubl.UblTaxSubtotal? left, EFactura.Net.Ubl.UblTaxSubtotal? right) -> bool
+static EFactura.Net.Ubl.UblTaxSubtotal.operator ==(EFactura.Net.Ubl.UblTaxSubtotal? left, EFactura.Net.Ubl.UblTaxSubtotal? right) -> bool
+static EFactura.Net.Ubl.UblTotals.Calculate(EFactura.Net.Ubl.UblDocument! document) -> EFactura.Net.Ubl.UblTotalsResult!
+static EFactura.Net.Ubl.UblTotalsResult.operator !=(EFactura.Net.Ubl.UblTotalsResult? left, EFactura.Net.Ubl.UblTotalsResult? right) -> bool
+static EFactura.Net.Ubl.UblTotalsResult.operator ==(EFactura.Net.Ubl.UblTotalsResult? left, EFactura.Net.Ubl.UblTotalsResult? right) -> bool
+static EFactura.Net.Ubl.UblUnitCodes.FromRomanianUnit(string? unit) -> string!
+static EFactura.Net.Ubl.UblWriteOptions.Default.get -> EFactura.Net.Ubl.UblWriteOptions!
+static EFactura.Net.Ubl.UblWriteOptions.operator !=(EFactura.Net.Ubl.UblWriteOptions? left, EFactura.Net.Ubl.UblWriteOptions? right) -> bool
+static EFactura.Net.Ubl.UblWriteOptions.operator ==(EFactura.Net.Ubl.UblWriteOptions? left, EFactura.Net.Ubl.UblWriteOptions? right) -> bool
+static EFactura.Net.Ubl.UblWriter.ToXDocument(EFactura.Net.Ubl.UblDocument! document, EFactura.Net.Ubl.UblWriteOptions? options = null) -> System.Xml.Linq.XDocument!
+static EFactura.Net.Ubl.UblWriter.Write(EFactura.Net.Ubl.UblDocument! document, EFactura.Net.Ubl.UblWriteOptions? options = null) -> string!
+static EFactura.Net.Ubl.UblWriter.WriteTo(EFactura.Net.Ubl.UblDocument! document, System.Xml.XmlWriter! writer, EFactura.Net.Ubl.UblWriteOptions? options = null) -> void
+virtual EFactura.Net.Ubl.UblDocument.EqualityContract.get -> System.Type!
+virtual EFactura.Net.Ubl.UblDocument.Equals(EFactura.Net.Ubl.UblDocument? other) -> bool
+virtual EFactura.Net.Ubl.UblDocument.PrintMembers(System.Text.StringBuilder! builder) -> bool

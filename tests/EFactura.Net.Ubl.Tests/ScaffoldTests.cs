@@ -7,6 +7,6 @@ public class ScaffoldTests
     [Fact]
     public void Ubl_assembly_is_referenced()
     {
-        Assert.Equal("EFactura.Net.Ubl", typeof(UblAssemblyMarker).Assembly.GetName().Name);
+        Assert.Equal("EFactura.Net.Ubl", typeof(UblWriter).Assembly.GetName().Name);
     }
 }
