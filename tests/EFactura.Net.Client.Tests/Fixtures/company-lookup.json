@@ -1,0 +1,81 @@
+{
+  "cod": 200,
+  "message": "SUCCESS",
+  "found": [
+    {
+      "date_generale": {
+        "cui": 12345678,
+        "data": "2026-01-15",
+        "denumire": "FURNIZOR TEST SRL",
+        "adresa": "JUD. GORJ, MUN. TARGU JIU, STR. EXEMPLU, NR.1",
+        "nrRegCom": "J40/1234/2020",
+        "telefon": "0250000000",
+        "fax": "",
+        "codPostal": "210135",
+        "act": "",
+        "stare_inregistrare": "INREGISTRAT din data 01.02.2020",
+        "data_inregistrare": "2020-02-01",
+        "cod_CAEN": "6201",
+        "iban": "",
+        "statusRO_e_Factura": true,
+        "organFiscalCompetent": "Administratia Judeteana a Finantelor Publice Gorj",
+        "forma_de_proprietate": "PROPRIETATE PRIVATA",
+        "forma_organizare": "PERSOANA JURIDICA",
+        "forma_juridica": "Societate cu raspundere limitata"
+      },
+      "inregistrare_scop_Tva": {
+        "scpTVA": true,
+        "perioade_TVA": [],
+        "data_inceput_ScpTVA": "2020-03-01",
+        "data_sfarsit_ScpTVA": "",
+        "data_anul_imp_ScpTVA": "",
+        "mesaj_ScpTVA": ""
+      },
+      "inregistrare_RTVAI": {
+        "dataInceputTvaInc": "",
+        "dataSfarsitTvaInc": "",
+        "dataActualizareTvaInc": "",
+        "dataPublicareTvaInc": "",
+        "tipActTvaInc": "",
+        "statusTvaIncasare": false
+      },
+      "stare_inactiv": {
+        "dataInactivare": "",
+        "dataReactivare": "",
+        "dataPublicare": "",
+        "dataRadiere": "",
+        "statusInactivi": false
+      },
+      "inregistrare_SplitTVA": {
+        "dataInceputSplitTVA": "",
+        "dataAnulareSplitTVA": "",
+        "statusSplitTVA": false
+      },
+      "adresa_sediu_social": {
+        "sdenumire_Strada": "Str. Exemplu",
+        "snumar_Strada": "1",
+        "sdenumire_Localitate": "Mun. Targu Jiu",
+        "scod_Localitate": "95",
+        "sdenumire_Judet": "GORJ",
+        "scod_Judet": "18",
+        "scod_JudetAuto": "GJ",
+        "stara": "Romania",
+        "sdetalii_Adresa": "",
+        "scod_Postal": "210135"
+      },
+      "adresa_domiciliu_fiscal": {
+        "ddenumire_Strada": "Str. Exemplu",
+        "dnumar_Strada": "1",
+        "ddenumire_Localitate": "Mun. Targu Jiu",
+        "dcod_Localitate": "95",
+        "ddenumire_Judet": "GORJ",
+        "dcod_Judet": "18",
+        "dcod_JudetAuto": "GJ",
+        "dtara": "Romania",
+        "ddetalii_Adresa": "",
+        "dcod_Postal": "210135"
+      }
+    }
+  ],
+  "notFound": []
+}

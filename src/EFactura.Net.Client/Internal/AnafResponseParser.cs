@@ -37,15 +37,7 @@ internal static class AnafResponseParser
             ? parsed
             : -1;
 
-        DateTimeOffset? responseDate = null;
-        if (DateTimeOffset.TryParse(
-                header.Attribute("dateResponse")?.Value,
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
-                out var parsedDate))
-        {
-            responseDate = parsedDate;
-        }
+        var responseDate = ParseResponseDate(header.Attribute("dateResponse")?.Value);
 
         // ANAF signals acceptance with ExecutionStatus="0" AND an index to poll. Treat a missing
         // index as failure even if the status says 0 — there would be nothing to poll.
@@ -60,6 +52,29 @@ internal static class AnafResponseParser
             ResponseDate = responseDate,
             RawResponse = xml,
         };
+    }
+
+    /// <summary>
+    /// ANAF stamps upload responses as <c>yyyyMMddHHmm</c> with no zone or separators, which no
+    /// general-purpose parse handles. Falls back to a lenient parse for anything else.
+    /// </summary>
+    private static DateTimeOffset? ParseResponseDate(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        const DateTimeStyles Styles = DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal;
+
+        if (DateTimeOffset.TryParseExact(value, "yyyyMMddHHmm", CultureInfo.InvariantCulture, Styles, out var exact))
+        {
+            return exact;
+        }
+
+        return DateTimeOffset.TryParse(value, CultureInfo.InvariantCulture, Styles, out var parsed)
+            ? parsed
+            : null;
     }
 
     internal static AnafMessageStatus ParseStatusResponse(string xml)

@@ -74,6 +74,10 @@ dotnet_diagnostic.CA2007.severity = none
 dotnet_diagnostic.CA1062.severity = none
 dotnet_diagnostic.CA1707.severity = none
 dotnet_diagnostic.CA1861.severity = none
+# xUnit1051 wants TestContext.Current.CancellationToken threaded through every call that takes
+# one. These tests run against an in-memory handler and finish in milliseconds, so there is
+# nothing to cancel; the tests that actually exercise cancellation pass their own token.
+dotnet_diagnostic.xUnit1051.severity = none
 
 [samples/**/*.cs]
 dotnet_diagnostic.CA2007.severity = none

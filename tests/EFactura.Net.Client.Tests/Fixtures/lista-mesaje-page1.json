@@ -1,0 +1,25 @@
+{
+  "mesaje": [
+    {
+      "data_creare": "202601020800",
+      "cif": "12345678",
+      "id_solicitare": "1000000001",
+      "detalii": "Factura trimisa",
+      "tip": "FACTURA TRIMISA",
+      "id": "2000000001"
+    },
+    {
+      "data_creare": "202601030800",
+      "cif": "12345678",
+      "id_solicitare": "1000000002",
+      "detalii": "Factura trimisa",
+      "tip": "FACTURA TRIMISA",
+      "id": "2000000002"
+    }
+  ],
+  "numar_total_inregistrari": 3,
+  "numar_total_pagini": 2,
+  "index_pagina_curenta": 1,
+  "serial": "1234AA456",
+  "titlu": "Lista Mesaje paginata"
+}

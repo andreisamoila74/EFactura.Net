@@ -1,0 +1,17 @@
+{
+  "mesaje": [
+    {
+      "data_creare": "202601040800",
+      "cif": "12345678",
+      "id_solicitare": "1000000003",
+      "detalii": "Mesaj cumparator",
+      "tip": "MESAJ CUMPARATOR PRIMIT",
+      "id": "2000000003"
+    }
+  ],
+  "numar_total_inregistrari": 3,
+  "numar_total_pagini": 2,
+  "index_pagina_curenta": 2,
+  "serial": "1234AA456",
+  "titlu": "Lista Mesaje paginata"
+}

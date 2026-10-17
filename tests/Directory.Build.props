@@ -17,6 +17,11 @@
 
   <ItemGroup>
     <PackageReference Include="xunit.v3" />
+    <!--
+      Coverage comes from the Microsoft.Testing.Platform extension rather than coverlet.collector:
+      coverlet's collector runs under VSTest, which the .NET 10 SDK no longer supports for xunit.v3.
+    -->
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
   </ItemGroup>
 
   <ItemGroup>

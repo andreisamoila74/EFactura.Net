@@ -4,4 +4,14 @@
     <ProjectReference Include="../../src/EFactura.Net.Client/EFactura.Net.Client.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="RichardSzalay.MockHttp" />
+    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
+  </ItemGroup>
+
+  <!-- Sanitised ANAF response samples. -->
+  <ItemGroup>
+    <None Include="Fixtures/**/*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

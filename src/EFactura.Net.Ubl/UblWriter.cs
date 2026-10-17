@@ -48,16 +48,19 @@ public static class UblWriter
             Indent = options.Indent,
             IndentChars = "  ",
             OmitXmlDeclaration = !options.IncludeXmlDeclaration,
-            Encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
+            Encoding = Utf8NoBom,
         };
 
-        var builder = new StringBuilder();
-        using (var writer = XmlWriter.Create(builder, settings))
+        // XmlWriter takes the declared encoding from the TextWriter, not from settings.Encoding,
+        // so writing to a plain StringWriter would declare utf-16 on a document that is handed to
+        // ANAF as UTF-8.
+        using var output = new Utf8StringWriter();
+        using (var writer = XmlWriter.Create(output, settings))
         {
             root.Save(writer);
         }
 
-        return builder.ToString();
+        return output.ToString();
     }
 
     /// <summary>Serializes a document to an existing <see cref="XmlWriter"/>.</summary>
@@ -100,5 +103,13 @@ public static class UblWriter
         ArgumentNullException.ThrowIfNull(document);
 
         return new XDocument(UblXmlBuilder.Build(document, options ?? UblWriteOptions.Default));
+    }
+
+    private static readonly UTF8Encoding Utf8NoBom = new(encoderShouldEmitUTF8Identifier: false);
+
+    /// <summary>A <see cref="StringWriter"/> that reports UTF-8 so the XML declaration says so.</summary>
+    private sealed class Utf8StringWriter : StringWriter
+    {
+        public override Encoding Encoding => Utf8NoBom;
     }
 }

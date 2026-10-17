@@ -1,0 +1,8 @@
+{
+  "stare": "nok",
+  "Messages": [
+    { "message": "E: validari globale  ale documentului:A existat o eroare la validarea business rules: [BR-CO-10]-Sum of Invoice line net amount MUST be equal to the sum of Invoice line net amounts." },
+    { "message": "E: lipsa element obligatoriu cbc:CustomizationID" }
+  ],
+  "trace_id": "0000aaaa2222cccc"
+}

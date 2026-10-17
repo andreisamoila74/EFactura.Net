@@ -1,0 +1,7 @@
+{
+  "access_token": "test-access-token-value",
+  "refresh_token": "test-refresh-token-value",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "scope": "efactura"
+}

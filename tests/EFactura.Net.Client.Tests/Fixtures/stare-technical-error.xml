@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<header xmlns="mfp:anaf:dgti:spv:stareMesajFactura:v1">
+    <Errors errorMessage="Eroare tehnica. Va rugam reincercati. Cod: 5001"/>
+</header>

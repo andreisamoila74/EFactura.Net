@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<header xmlns="mfp:anaf:dgti:spv:respUploadFisier:v1" dateResponse="202601151232" ExecutionStatus="1">
+    <Errors>Eroare la validarea structurii XML</Errors>
+</header>

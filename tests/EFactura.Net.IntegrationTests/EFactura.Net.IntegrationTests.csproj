@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <!--
-    Opt-in. These talk to real ANAF endpoints and are skipped unless the relevant
+    Opt-in. Every test here reaches a real ANAF endpoint and skips itself unless the relevant
     environment variables are set. See docs/testing.md.
   -->
   <ItemGroup>
     <ProjectReference Include="../../src/EFactura.Net.Client/EFactura.Net.Client.csproj" />
+    <ProjectReference Include="../../src/EFactura.Net.Ubl/EFactura.Net.Ubl.csproj" />
   </ItemGroup>
 
 </Project>

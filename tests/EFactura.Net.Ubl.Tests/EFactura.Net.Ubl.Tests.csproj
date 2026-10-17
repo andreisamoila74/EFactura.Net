@@ -4,4 +4,14 @@
     <ProjectReference Include="../../src/EFactura.Net.Ubl/EFactura.Net.Ubl.csproj" />
   </ItemGroup>
 
+  <!-- Committed XML snapshots, compared byte for byte. -->
+  <ItemGroup>
+    <None Include="Snapshots/**/*.verified.xml" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- OASIS UBL 2.1 schemas, used to validate every generated document. -->
+  <ItemGroup>
+    <None Include="Schemas/**/*.xsd" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
