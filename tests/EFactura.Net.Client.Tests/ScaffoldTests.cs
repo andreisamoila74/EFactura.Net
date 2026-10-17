@@ -7,6 +7,6 @@ public class ScaffoldTests
     [Fact]
     public void Client_assembly_is_referenced()
     {
-        Assert.Equal("EFactura.Net.Client", typeof(ClientAssemblyMarker).Assembly.GetName().Name);
+        Assert.Equal("EFactura.Net.Client", typeof(AnafEFacturaClient).Assembly.GetName().Name);
     }
 }

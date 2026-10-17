@@ -8,6 +8,6 @@ public class ScaffoldTests
     [Fact]
     public void Integration_project_builds()
     {
-        Assert.Equal("EFactura.Net.Client", typeof(ClientAssemblyMarker).Assembly.GetName().Name);
+        Assert.Equal("EFactura.Net.Client", typeof(AnafEFacturaClient).Assembly.GetName().Name);
     }
 }
