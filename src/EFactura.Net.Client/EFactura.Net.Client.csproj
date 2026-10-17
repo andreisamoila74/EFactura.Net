@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>EFactura.Net.Client</RootNamespace>
+    <AssemblyName>EFactura.Net.Client</AssemblyName>
+    <PackageId>EFactura.Net.Client</PackageId>
+    <Title>EFactura.Net.Client — ANAF e-Factura REST client</Title>
+    <Description>Unofficial .NET client for Romania's ANAF RO e-Factura REST API: upload, status, download, message listing (incl. paging), XML validation and XML-to-PDF conversion, plus OAuth2 helpers and VAT-payer company lookup by CUI. Ships DI extensions and leaves token storage and HTTP resilience to the host. Not affiliated with or endorsed by ANAF.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../EFactura.Net.Ubl/EFactura.Net.Ubl.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="EFactura.Net.Client.Tests" />
+    <InternalsVisibleTo Include="EFactura.Net.IntegrationTests" />
+  </ItemGroup>
+
+</Project>

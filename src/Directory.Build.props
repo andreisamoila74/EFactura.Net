@@ -1,0 +1,44 @@
+<Project>
+
+  <!-- Inherit the repo-root settings first. -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageTags>efactura;anaf;ubl;cius-ro;einvoicing;romania;en16931;e-factura</PackageTags>
+    <PackageReleaseNotes>https://github.com/andreisamoila74/EFactura.Net/blob/main/CHANGELOG.md</PackageReleaseNotes>
+
+    <!-- SourceLink ships in the .NET 8+ SDK for GitHub-hosted repos; no package reference needed. -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <!-- Catches a TFM being dropped or a public API vanishing between packs. -->
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <!-- After 1.0.0: <PackageValidationBaselineVersion>1.0.0</PackageValidationBaselineVersion> -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Each package carries its own consumer-facing README; the icon is shared. -->
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="$(MSBuildThisFileDirectory)../assets/icon.png" Pack="true" PackagePath="\" Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="PublicAPI.Shipped.txt" />
+    <AdditionalFiles Include="PublicAPI.Unshipped.txt" />
+  </ItemGroup>
+
+</Project>

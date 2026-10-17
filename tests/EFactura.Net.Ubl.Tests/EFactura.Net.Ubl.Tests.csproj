@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/EFactura.Net.Ubl/EFactura.Net.Ubl.csproj" />
+  </ItemGroup>
+
+</Project>

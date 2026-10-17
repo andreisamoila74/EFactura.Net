@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!-- Samples run on the current LTS only; no need to multi-target. -->
+    <TargetFrameworks>net10.0</TargetFrameworks>
+    <IsPackable>false</IsPackable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/EFactura.Net.Client/EFactura.Net.Client.csproj" />
+    <ProjectReference Include="../../src/EFactura.Net.Ubl/EFactura.Net.Ubl.csproj" />
+  </ItemGroup>
+
+</Project>

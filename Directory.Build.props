@@ -1,0 +1,40 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <InvariantGlobalization>true</InvariantGlobalization>
+
+    <!-- Only src/* opts back in; see src/Directory.Build.props. -->
+    <IsPackable>false</IsPackable>
+
+    <!-- Reproducible builds. ContinuousIntegrationBuild is set by CI only. -->
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Andrei Samoila</Authors>
+    <Company>Samtech Labs SRL</Company>
+    <Copyright>Copyright (c) Andrei Samoila</Copyright>
+    <RepositoryUrl>https://github.com/andreisamoila74/EFactura.Net</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/andreisamoila74/EFactura.Net</PackageProjectUrl>
+  </PropertyGroup>
+
+  <!-- Version comes from git tags (vX.Y.Z) via MinVer. -->
+  <PropertyGroup>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MinVer" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>EFactura.Net.Ubl</RootNamespace>
+    <AssemblyName>EFactura.Net.Ubl</AssemblyName>
+    <PackageId>EFactura.Net.Ubl</PackageId>
+    <Title>EFactura.Net.Ubl — CIUS-RO UBL 2.1 invoice model and writer</Title>
+    <Description>Unofficial .NET library for Romania's RO e-Factura: an immutable CIUS-RO / EN 16931 UBL 2.1 model for invoices and credit notes, with an XML writer, EN 16931-conformant total calculation, and Romanian unit-code and county-code helpers. No third-party dependencies. Not affiliated with or endorsed by ANAF.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="EFactura.Net.Ubl.Tests" />
+    <InternalsVisibleTo Include="EFactura.Net.Client" />
+    <InternalsVisibleTo Include="EFactura.Net.Client.Tests" />
+  </ItemGroup>
+
+</Project>

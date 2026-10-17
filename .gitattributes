@@ -1,0 +1,25 @@
+* text=auto
+
+# Snapshot/approval files must keep LF so they compare byte-identically across platforms.
+*.verified.* text eol=lf
+*.received.* text eol=lf
+
+# XML fixtures are compared as text; keep them stable.
+*.xml text eol=lf
+
+# .editorconfig declares end_of_line = lf for the whole tree; pin git to match so an
+# editorconfig-aware IDE does not rewrite line endings on every save.
+*.cs text eol=lf diff=csharp
+*.csproj text eol=lf
+*.props text eol=lf
+*.targets text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.slnx text eol=lf
+*.sln text eol=crlf
+
+*.png binary
+*.zip binary
+*.nupkg binary
+*.snupkg binary

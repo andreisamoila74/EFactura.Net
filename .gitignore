@@ -1,0 +1,41 @@
+## Build output
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+artifacts/
+*.binlog
+
+## Rider / VS / VS Code
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+*.userprefs
+
+## Test / coverage
+[Tt]est[Rr]esult*/
+coverage*
+*.coverage
+*.trx
+*.received.*
+
+## NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Extraction working notes.
+## These document the internals of the private EasyBilling repo the SDK was lifted out of
+## (inventory, API mapping, behavior notes) and are NOT part of the public package.
+sdk-extraction/
+
+## Local secrets — never commit. Integration tests read ANAF credentials from the
+## environment only (see docs/testing.md).
+*.local.json
+.env
+.env.*

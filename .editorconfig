@@ -1,0 +1,80 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{cs,csx}]
+indent_size = 4
+
+[*.{csproj,props,targets,xml,xsd}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.{verified,received}.*]
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+[*.cs]
+# Namespaces / usings
+csharp_style_namespace_declarations = file_scoped:warning
+dotnet_sort_system_directives_first = true
+csharp_using_directive_placement = outside_namespace:warning
+
+# var
+csharp_style_var_for_built_in_types = false:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+
+# Modern expression styles
+csharp_style_expression_bodied_methods = when_on_single_line:suggestion
+csharp_style_expression_bodied_properties = true:suggestion
+csharp_style_prefer_primary_constructors = false:suggestion
+csharp_prefer_braces = when_multiline:suggestion
+csharp_style_prefer_switch_expression = true:suggestion
+csharp_style_throw_expression = true:suggestion
+
+# Nullability / immutability
+dotnet_style_prefer_conditional_expression_over_assignment = true:suggestion
+dotnet_style_readonly_field = true:warning
+csharp_prefer_static_local_function = true:suggestion
+
+# Accessibility must be explicit in a public library
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:warning
+
+# Naming: interfaces prefixed with I
+dotnet_naming_rule.interfaces_start_with_i.severity = warning
+dotnet_naming_rule.interfaces_start_with_i.symbols = interface_symbol
+dotnet_naming_rule.interfaces_start_with_i.style = prefix_i_style
+dotnet_naming_symbols.interface_symbol.applicable_kinds = interface
+dotnet_naming_style.prefix_i_style.required_prefix = I
+dotnet_naming_style.prefix_i_style.capitalization = pascal_case
+
+# Library-code rules worth failing the build on (TreatWarningsAsErrors is on).
+# CA2007: await without ConfigureAwait — mandatory in library code.
+dotnet_diagnostic.CA2007.severity = warning
+# CA1062: validate public arguments.
+dotnet_diagnostic.CA1062.severity = warning
+# CA1303/CA1304/CA1305/CA1307/CA1310: culture-sensitive string and format operations.
+dotnet_diagnostic.CA1305.severity = warning
+dotnet_diagnostic.CA1310.severity = warning
+# RS0016/RS0017: public API not listed in PublicAPI.*.txt.
+dotnet_diagnostic.RS0016.severity = error
+dotnet_diagnostic.RS0017.severity = error
+
+[tests/**/*.cs]
+# Tests are not library code: ConfigureAwait and arg-validation noise is unhelpful,
+# and xunit drives the context.
+dotnet_diagnostic.CA2007.severity = none
+dotnet_diagnostic.CA1062.severity = none
+dotnet_diagnostic.CA1707.severity = none
+dotnet_diagnostic.CA1861.severity = none
+
+[samples/**/*.cs]
+dotnet_diagnostic.CA2007.severity = none
+dotnet_diagnostic.CA1062.severity = none

@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/EFactura.Net.Samples.Console/EFactura.Net.Samples.Console.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/EFactura.Net.Client/EFactura.Net.Client.csproj" />
+    <Project Path="src/EFactura.Net.Ubl/EFactura.Net.Ubl.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/EFactura.Net.Client.Tests/EFactura.Net.Client.Tests.csproj" />
+    <Project Path="tests/EFactura.Net.IntegrationTests/EFactura.Net.IntegrationTests.csproj" />
+    <Project Path="tests/EFactura.Net.Ubl.Tests/EFactura.Net.Ubl.Tests.csproj" />
+  </Folder>
+</Solution>
