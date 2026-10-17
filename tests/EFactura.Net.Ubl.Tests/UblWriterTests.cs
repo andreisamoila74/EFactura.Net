@@ -108,8 +108,8 @@ public class UblWriterStructureTests
 
         var party = root.Element(Cac + "AccountingSupplierParty")!.Element(Cac + "Party")!;
 
-        // Supplied as "12345678" without the prefix.
-        Assert.Equal("RO12345678", party.Element(Cac + "PartyTaxScheme")?.Element(Cbc + "CompanyID")?.Value);
+        // Supplied as "12345674" without the prefix.
+        Assert.Equal("RO12345674", party.Element(Cac + "PartyTaxScheme")?.Element(Cbc + "CompanyID")?.Value);
         Assert.Equal("J40/1234/2020", party.Element(Cac + "PartyLegalEntity")?.Element(Cbc + "CompanyID")?.Value);
     }
 
@@ -133,7 +133,7 @@ public class UblWriterStructureTests
         var party = root.Element(Cac + "AccountingSupplierParty")!.Element(Cac + "Party")!;
 
         Assert.Null(party.Element(Cac + "PartyTaxScheme"));
-        Assert.Equal("RO12345678", party.Element(Cac + "PartyLegalEntity")?.Element(Cbc + "CompanyID")?.Value);
+        Assert.Equal("RO12345674", party.Element(Cac + "PartyLegalEntity")?.Element(Cbc + "CompanyID")?.Value);
     }
 
     [Fact]
@@ -161,20 +161,19 @@ public class UblWriterStructureTests
         Assert.Equal("RO49AAAA1B31007593840000", id);
     }
 
+    /// <summary>
+    /// CIUS-RO UBL-CR-429 forbids a bank name on an invoice; ANAF's validator rejects any document
+    /// carrying one. The account element must contain the IBAN and nothing else.
+    /// </summary>
     [Fact]
-    public void Bank_name_is_emitted_only_when_supplied()
+    public void Payee_account_carries_only_the_iban()
     {
-        var withBank = XDocument.Parse(UblWriter.Write(TestDocuments.WithBankName())).Root!;
-        var withoutBank = XDocument.Parse(UblWriter.Write(TestDocuments.DomesticRon())).Root!;
+        var root = XDocument.Parse(UblWriter.Write(TestDocuments.WithPaymentMeans())).Root!;
 
-        var branch = withBank.Element(Cac + "PaymentMeans")!
-            .Element(Cac + "PayeeFinancialAccount")!
-            .Element(Cac + "FinancialInstitutionBranch");
+        var account = root.Element(Cac + "PaymentMeans")!.Element(Cac + "PayeeFinancialAccount")!;
 
-        Assert.Equal("Banca Test", branch?.Element(Cbc + "Name")?.Value);
-        Assert.Null(withoutBank.Element(Cac + "PaymentMeans")!
-            .Element(Cac + "PayeeFinancialAccount")!
-            .Element(Cac + "FinancialInstitutionBranch"));
+        Assert.Null(account.Element(Cac + "FinancialInstitutionBranch"));
+        Assert.Equal(["ID"], account.Elements().Select(e => e.Name.LocalName));
     }
 
     [Fact]
@@ -289,7 +288,11 @@ public class UblWriterStructureTests
     [Fact]
     public void Optional_elements_are_omitted_rather_than_emitted_empty()
     {
-        var root = XDocument.Parse(UblWriter.Write(TestDocuments.Minimal())).Root!;
+        // Built here rather than reusing Minimal(), which carries a due date because BR-CO-25
+        // requires one. This document is about omission, not about being acceptable to ANAF.
+        var bare = TestDocuments.Minimal() with { DueDate = null };
+
+        var root = XDocument.Parse(UblWriter.Write(bare)).Root!;
 
         Assert.Null(root.Element(Cbc + "DueDate"));
         Assert.Null(root.Element(Cbc + "Note"));
@@ -426,7 +429,6 @@ public class UblWriterValidationTests
             () => UblWriter.Write(invoice, new UblWriteOptions { StrictAddressValidation = true }));
 
         Assert.Contains("Nu Există", exception.Message, StringComparison.Ordinal);
-        Assert.Single(exception.Errors);
     }
 
     [Fact]
@@ -442,7 +444,8 @@ public class UblWriterValidationTests
         var exception = Assert.Throws<UblValidationException>(
             () => UblWriter.Write(invoice, new UblWriteOptions { StrictAddressValidation = true }));
 
-        // Both parties are reported, rather than failing on the first.
-        Assert.Equal(2, exception.Errors.Count);
+        // Both parties are reported, rather than failing on the first: county, street and city for
+        // each of the two addresses.
+        Assert.Equal(6, exception.Errors.Count);
     }
 }

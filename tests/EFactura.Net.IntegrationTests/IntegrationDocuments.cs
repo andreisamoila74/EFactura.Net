@@ -16,7 +16,7 @@ internal static class IntegrationDocuments
     private static UblParty Seller => new()
     {
         Name = "Furnizor Test SRL",
-        VatIdentifier = "RO12345678",
+        VatIdentifier = "RO12345674",
         LegalRegistrationId = "J40/1234/2020",
         Address = new UblAddress
         {
@@ -29,7 +29,7 @@ internal static class IntegrationDocuments
     private static UblParty Buyer => new()
     {
         Name = "Client Test SRL",
-        VatIdentifier = "RO87654321",
+        VatIdentifier = "RO87654329",
         LegalRegistrationId = "J20/4321/2019",
         Address = new UblAddress
         {
@@ -56,7 +56,8 @@ internal static class IntegrationDocuments
         {
             "DomesticRon" => baseInvoice with { PaymentMeans = BankTransfer },
 
-            "Minimal" => baseInvoice with { DueDate = null },
+            // BR-CO-25 makes a due date effectively mandatory, so "minimal" still has one.
+            "Minimal" => baseInvoice,
 
             "ReverseCharge" => baseInvoice with
             {
@@ -81,17 +82,7 @@ internal static class IntegrationDocuments
                 ],
             },
 
-            "WithBankName" => baseInvoice with
-            {
-                PaymentMeans = new UblPaymentMeans
-                {
-                    PayeeAccount = new UblBankAccount
-                    {
-                        Iban = "RO49AAAA1B31007593840000",
-                        BankName = "Banca Test",
-                    },
-                },
-            },
+            "WithPaymentMeans" => baseInvoice with { PaymentMeans = BankTransfer },
 
             _ => throw new ArgumentOutOfRangeException(nameof(scenario), scenario, "Unknown scenario."),
         };
@@ -130,6 +121,11 @@ internal static class IntegrationDocuments
         UnitPrice = 1000m,
         TaxRate = 0m,
         TaxCategory = category,
+
+        // Required by BR-AE-10 / BR-E-10; omitting it would have ANAF reject the document.
+        TaxExemptionReason = category == UblTaxCategory.ReverseCharge
+            ? "Taxare inversă conform art. 331 Cod Fiscal"
+            : "Scutit conform art. 292 Cod Fiscal",
     };
 
     private static UblPaymentMeans BankTransfer => new()

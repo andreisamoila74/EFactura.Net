@@ -198,22 +198,22 @@ public class RomanianAddressCityTests
 public class CuiNormalizerTests
 {
     [Theory]
-    [InlineData("12345678", "RO12345678")]
-    [InlineData("RO12345678", "RO12345678")]
-    [InlineData("ro12345678", "RO12345678")]
-    [InlineData("  12345678  ", "RO12345678")]
-    [InlineData("RO 12345678", "RO12345678")]
-    [InlineData("12 345 678", "RO12345678")]
+    [InlineData("12345674", "RO12345674")]
+    [InlineData("RO12345674", "RO12345674")]
+    [InlineData("ro12345674", "RO12345674")]
+    [InlineData("  12345674  ", "RO12345674")]
+    [InlineData("RO 12345674", "RO12345674")]
+    [InlineData("12 345 674", "RO12345674")]
     public void Vat_identifier_is_upper_cased_stripped_and_prefixed(string input, string expected)
     {
         Assert.Equal(expected, CuiNormalizer.ToVatIdentifier(input));
     }
 
     [Theory]
-    [InlineData("12345678", "12345678")]
-    [InlineData("RO12345678", "12345678")]
-    [InlineData("ro 12345678", "12345678")]
-    [InlineData("  RO12345678  ", "12345678")]
+    [InlineData("12345674", "12345674")]
+    [InlineData("RO12345674", "12345674")]
+    [InlineData("ro 12345674", "12345674")]
+    [InlineData("  RO12345674  ", "12345674")]
     public void Bare_number_drops_the_prefix(string input, string expected)
     {
         Assert.Equal(expected, CuiNormalizer.ToBareNumber(input));

@@ -9,6 +9,34 @@ namespace EFactura.Net.Client.Internal;
 /// </summary>
 internal static class AnafCompanyParser
 {
+    /// <summary>
+    /// Whether <paramref name="json"/> is a registry payload rather than an unrelated error page.
+    /// </summary>
+    /// <remarks>
+    /// Used to tell ANAF's "no such company" 404 — which carries a normal body — apart from a 404
+    /// caused by a misconfigured endpoint, which would not.
+    /// </remarks>
+    internal static bool LooksLikeRegistryResponse(string json)
+    {
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            return false;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(json);
+
+            return document.RootElement.ValueKind == JsonValueKind.Object
+                && (document.RootElement.TryGetProperty("found", out _)
+                    || document.RootElement.TryGetProperty("notFound", out _));
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
     internal static IReadOnlyList<AnafCompanyInfo> Parse(string json)
     {
         using var document = JsonDocument.Parse(json);

@@ -152,12 +152,12 @@ public class CompanyLookupTests
     {
         using var mock = new MockHttpMessageHandler();
         mock.Expect(HttpMethod.Post, "https://webservicesp.anaf.ro/api/PlatitorTvaRest/v9/tva")
-            .WithContent("[{\"cui\":12345678,\"data\":\"2026-01-15\"}]")
+            .WithContent("[{\"cui\":12345674,\"data\":\"2026-01-15\"}]")
             .Respond(() => Task.FromResult(TestHarness.Json(Fixture.Read("company-lookup.json"))));
 
         var client = TestHarness.CreateLookupClient(mock, At(2026, 1, 15));
 
-        await client.GetByCuiAsync("12345678");
+        await client.GetByCuiAsync("12345674");
 
         mock.VerifyNoOutstandingExpectation();
     }
@@ -167,12 +167,12 @@ public class CompanyLookupTests
     {
         using var mock = new MockHttpMessageHandler();
         mock.Expect("*")
-            .WithContent("[{\"cui\":12345678,\"data\":\"2026-06-30\"}]")
+            .WithContent("[{\"cui\":12345674,\"data\":\"2026-06-30\"}]")
             .Respond(() => Task.FromResult(TestHarness.Json(Fixture.Read("company-lookup.json"))));
 
         var client = TestHarness.CreateLookupClient(mock, At(2026, 6, 30));
 
-        await client.GetByCuiAsync("12345678");
+        await client.GetByCuiAsync("12345674");
 
         mock.VerifyNoOutstandingExpectation();
     }
@@ -182,25 +182,25 @@ public class CompanyLookupTests
     {
         using var mock = new MockHttpMessageHandler();
         mock.Expect("*")
-            .WithContent("[{\"cui\":12345678,\"data\":\"2024-03-01\"}]")
+            .WithContent("[{\"cui\":12345674,\"data\":\"2024-03-01\"}]")
             .Respond(() => Task.FromResult(TestHarness.Json(Fixture.Read("company-lookup.json"))));
 
         var client = TestHarness.CreateLookupClient(mock, At(2026, 6, 30));
 
-        await client.GetByCuiAsync("12345678", new DateOnly(2024, 3, 1));
+        await client.GetByCuiAsync("12345674", new DateOnly(2024, 3, 1));
 
         mock.VerifyNoOutstandingExpectation();
     }
 
     [Theory]
-    [InlineData("12345678")]
-    [InlineData("RO12345678")]
-    [InlineData("  ro 12345678 ")]
+    [InlineData("12345674")]
+    [InlineData("RO12345674")]
+    [InlineData("  ro 12345674 ")]
     public async Task Accepts_the_cui_in_any_common_form(string cui)
     {
         using var mock = new MockHttpMessageHandler();
         mock.Expect("*")
-            .WithContent("[{\"cui\":12345678,\"data\":\"2026-01-15\"}]")
+            .WithContent("[{\"cui\":12345674,\"data\":\"2026-01-15\"}]")
             .Respond(() => Task.FromResult(TestHarness.Json(Fixture.Read("company-lookup.json"))));
 
         var client = TestHarness.CreateLookupClient(mock, At(2026, 1, 15));
@@ -218,10 +218,10 @@ public class CompanyLookupTests
 
         var client = TestHarness.CreateLookupClient(mock, At(2026, 1, 15));
 
-        var company = await client.GetByCuiAsync("12345678");
+        var company = await client.GetByCuiAsync("12345674");
 
         Assert.NotNull(company);
-        Assert.Equal("12345678", company.Cui);
+        Assert.Equal("12345674", company.Cui);
         Assert.Equal("FURNIZOR TEST SRL", company.Name);
         Assert.Equal("J40/1234/2020", company.RegistrationNumber);
         Assert.Equal("6201", company.CaenCode);
@@ -242,7 +242,7 @@ public class CompanyLookupTests
 
         var client = TestHarness.CreateLookupClient(mock, At(2026, 1, 15));
 
-        var company = await client.GetByCuiAsync("12345678");
+        var company = await client.GetByCuiAsync("12345674");
 
         Assert.Equal("Str. Exemplu", company!.RegisteredAddress?.Street);
         Assert.Equal("GORJ", company.RegisteredAddress?.County);
@@ -259,7 +259,7 @@ public class CompanyLookupTests
 
         var client = TestHarness.CreateLookupClient(mock, At(2026, 1, 15));
 
-        var company = await client.GetByCuiAsync("12345678");
+        var company = await client.GetByCuiAsync("12345674");
 
         Assert.Null(company!.Iban);
         Assert.Null(company.Fax);
@@ -275,7 +275,7 @@ public class CompanyLookupTests
 
         var client = TestHarness.CreateLookupClient(mock, At(2026, 1, 15));
 
-        Assert.Null(await client.GetByCuiAsync("99999999"));
+        Assert.Null(await client.GetByCuiAsync("99999992"));
     }
 
     [Fact]
@@ -283,12 +283,12 @@ public class CompanyLookupTests
     {
         using var mock = new MockHttpMessageHandler();
         mock.Expect("*")
-            .WithContent("[{\"cui\":12345678,\"data\":\"2026-01-15\"},{\"cui\":87654321,\"data\":\"2026-01-15\"}]")
+            .WithContent("[{\"cui\":12345674,\"data\":\"2026-01-15\"},{\"cui\":87654329,\"data\":\"2026-01-15\"}]")
             .Respond(() => Task.FromResult(TestHarness.Json(Fixture.Read("company-lookup.json"))));
 
         var client = TestHarness.CreateLookupClient(mock, At(2026, 1, 15));
 
-        await client.GetManyByCuiAsync(["12345678", "RO87654321"]);
+        await client.GetManyByCuiAsync(["12345674", "RO87654329"]);
 
         mock.VerifyNoOutstandingExpectation();
     }
@@ -476,5 +476,58 @@ public class OAuthClientTests
         // Null means "keep what you have", which the caller must handle — it is not an error.
         Assert.Null(token.RefreshToken);
         Assert.Equal("new", token.AccessToken);
+    }
+}
+
+public class CompanyLookupNotFoundTests
+{
+    private static FakeTimeProvider At(int year, int month, int day) =>
+        new(new DateTimeOffset(year, month, day, 10, 0, 0, TimeSpan.Zero));
+
+    /// <summary>
+    /// The registry reports "no such company" with HTTP 404 and a normal JSON body. That is an
+    /// answer, not a transport failure — found by the integration suite against the live endpoint.
+    /// </summary>
+    [Fact]
+    public async Task A_404_carrying_a_registry_body_means_not_found_not_an_error()
+    {
+        using var mock = new MockHttpMessageHandler();
+        mock.When("*").Respond(() => Task.FromResult(TestHarness.Json(
+            "{\"found\":[],\"notFound\":[99999992]}", HttpStatusCode.NotFound)));
+
+        var client = TestHarness.CreateLookupClient(mock, At(2026, 1, 15));
+
+        Assert.Null(await client.GetByCuiAsync("99999992"));
+    }
+
+    [Fact]
+    public async Task A_404_batch_lookup_yields_an_empty_list()
+    {
+        using var mock = new MockHttpMessageHandler();
+        mock.When("*").Respond(() => Task.FromResult(TestHarness.Json(
+            "{\"found\":[],\"notFound\":[99999992,88888884]}", HttpStatusCode.NotFound)));
+
+        var client = TestHarness.CreateLookupClient(mock, At(2026, 1, 15));
+
+        Assert.Empty(await client.GetManyByCuiAsync(["99999992", "88888884"]));
+    }
+
+    /// <summary>
+    /// A 404 that is *not* a registry payload — a wrong endpoint, say — must still surface as a
+    /// transport failure rather than being silently read as "no results".
+    /// </summary>
+    [Fact]
+    public async Task A_404_without_a_registry_body_still_throws()
+    {
+        using var mock = new MockHttpMessageHandler();
+        mock.When("*").Respond(() => Task.FromResult(
+            new HttpResponseMessage(HttpStatusCode.NotFound)
+            {
+                Content = new StringContent("<html><body>Not Found</body></html>"),
+            }));
+
+        var client = TestHarness.CreateLookupClient(mock, At(2026, 1, 15));
+
+        await Assert.ThrowsAsync<AnafHttpException>(() => client.GetByCuiAsync("99999992"));
     }
 }

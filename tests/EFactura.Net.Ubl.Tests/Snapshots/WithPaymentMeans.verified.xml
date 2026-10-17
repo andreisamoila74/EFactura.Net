@@ -16,7 +16,7 @@
         </cac:Country>
       </cac:PostalAddress>
       <cac:PartyTaxScheme>
-        <cbc:CompanyID>RO12345678</cbc:CompanyID>
+        <cbc:CompanyID>RO12345674</cbc:CompanyID>
         <cac:TaxScheme>
           <cbc:ID>VAT</cbc:ID>
         </cac:TaxScheme>
@@ -41,7 +41,7 @@
         </cac:Country>
       </cac:PostalAddress>
       <cac:PartyTaxScheme>
-        <cbc:CompanyID>RO87654321</cbc:CompanyID>
+        <cbc:CompanyID>RO87654329</cbc:CompanyID>
         <cac:TaxScheme>
           <cbc:ID>VAT</cbc:ID>
         </cac:TaxScheme>
@@ -55,9 +55,6 @@
     <cbc:PaymentMeansCode>42</cbc:PaymentMeansCode>
     <cac:PayeeFinancialAccount>
       <cbc:ID>RO49AAAA1B31007593840000</cbc:ID>
-      <cac:FinancialInstitutionBranch>
-        <cbc:Name>Banca Test</cbc:Name>
-      </cac:FinancialInstitutionBranch>
     </cac:PayeeFinancialAccount>
   </cac:PaymentMeans>
   <cac:TaxTotal>

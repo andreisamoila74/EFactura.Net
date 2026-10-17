@@ -14,7 +14,7 @@ public static class TestDocuments
     internal static UblParty Seller { get; } = new()
     {
         Name = "Furnizor Test SRL",
-        VatIdentifier = "12345678",
+        VatIdentifier = "12345674",
         LegalRegistrationId = "J40/1234/2020",
         Address = new UblAddress
         {
@@ -27,7 +27,7 @@ public static class TestDocuments
     internal static UblParty Buyer { get; } = new()
     {
         Name = "Client Test SRL",
-        VatIdentifier = "RO87654321",
+        VatIdentifier = "RO87654329",
         LegalRegistrationId = "J20/4321/2019",
         Address = new UblAddress
         {
@@ -68,23 +68,37 @@ public static class TestDocuments
         ],
     };
 
-    /// <summary>Only what EN 16931 strictly requires — every optional field left unset.</summary>
+    /// <summary>
+    /// Only what EN 16931 strictly requires. Note that a due date is among those requirements:
+    /// BR-CO-25 demands BT-9 or payment terms whenever the payable amount is positive.
+    /// </summary>
     internal static UblInvoice Minimal() => new()
     {
         DocumentId = "FCT nr. 1002",
         IssueDate = new DateOnly(2026, 1, 15),
+        DueDate = new DateOnly(2026, 2, 14),
         CurrencyCode = "RON",
         Seller = new UblParty
         {
             Name = "Furnizor Test SRL",
-            VatIdentifier = "RO12345678",
-            Address = new UblAddress { CountrySubdivision = "Cluj" },
+            VatIdentifier = "RO12345674",
+            Address = new UblAddress
+            {
+                StreetName = "Str. Minimala nr. 1",
+                CityName = "Cluj-Napoca",
+                CountrySubdivision = "Cluj",
+            },
         },
         Buyer = new UblParty
         {
             Name = "Client Test SRL",
-            VatIdentifier = "RO87654321",
-            Address = new UblAddress { CountrySubdivision = "Cluj" },
+            VatIdentifier = "RO87654329",
+            Address = new UblAddress
+            {
+                StreetName = "Str. Minimala nr. 2",
+                CityName = "Cluj-Napoca",
+                CountrySubdivision = "Cluj",
+            },
         },
         Lines = [new UblLine { Name = "Serviciu", Quantity = 1m, UnitPrice = 100m, TaxRate = 21m }],
     };
@@ -127,6 +141,8 @@ public static class TestDocuments
                 UnitPrice = 5000m,
                 TaxRate = 0m,
                 TaxCategory = UblTaxCategory.ReverseCharge,
+                TaxExemptionReason = "Taxare inversă conform art. 331 Cod Fiscal",
+                TaxExemptionReasonCode = "VATEX-EU-AE",
             },
         ],
     };
@@ -149,6 +165,7 @@ public static class TestDocuments
                 UnitPrice = 800m,
                 TaxRate = 0m,
                 TaxCategory = UblTaxCategory.Exempt,
+                TaxExemptionReason = "Scutit conform art. 292 alin. (1) lit. a) Cod Fiscal",
             },
         ],
     };
@@ -178,6 +195,7 @@ public static class TestDocuments
                 UnitPrice = 400m,
                 TaxRate = 0m,
                 TaxCategory = UblTaxCategory.ReverseCharge,
+                TaxExemptionReason = "Taxare inversă conform art. 331 Cod Fiscal",
             },
             new UblLine
             {
@@ -229,18 +247,18 @@ public static class TestDocuments
         ],
     };
 
-    /// <summary>Bank name supplied — emits FinancialInstitutionBranch.</summary>
-    internal static UblInvoice WithBankName() => new()
+    /// <summary>
+    /// Payment details on a document that has no other optional fields. The IBAN is the only thing
+    /// CIUS-RO allows here — UBL-CR-429 forbids a bank name.
+    /// </summary>
+    internal static UblInvoice WithPaymentMeans() => new()
     {
         DocumentId = "FCT nr. 1010",
         IssueDate = new DateOnly(2026, 2, 15),
         CurrencyCode = "RON",
         Seller = Seller,
         Buyer = Buyer,
-        PaymentMeans = new UblPaymentMeans
-        {
-            PayeeAccount = new UblBankAccount { Iban = DocumentationIban, BankName = "Banca Test" },
-        },
+        PaymentMeans = BankTransfer,
         Lines = [new UblLine { Name = "Abonament", Quantity = 1m, Unit = "luna", UnitPrice = 199m, TaxRate = 21m }],
     };
 
@@ -307,7 +325,7 @@ public static class TestDocuments
         nameof(MixedTaxCategories),
         nameof(RequiringRounding),
         nameof(NonVatRegisteredSeller),
-        nameof(WithBankName),
+        nameof(WithPaymentMeans),
         nameof(WithLineDescriptions),
         nameof(CreditNote),
         nameof(ForeignCurrencyCreditNote),
@@ -324,7 +342,7 @@ public static class TestDocuments
         nameof(MixedTaxCategories) => MixedTaxCategories(),
         nameof(RequiringRounding) => RequiringRounding(),
         nameof(NonVatRegisteredSeller) => NonVatRegisteredSeller(),
-        nameof(WithBankName) => WithBankName(),
+        nameof(WithPaymentMeans) => WithPaymentMeans(),
         nameof(WithLineDescriptions) => WithLineDescriptions(),
         nameof(CreditNote) => CreditNote(),
         nameof(ForeignCurrencyCreditNote) => ForeignCurrencyCreditNote(),

@@ -14,8 +14,6 @@ EFactura.Net.Ubl.UblAddress.StreetName.init -> void
 EFactura.Net.Ubl.UblAddress.UblAddress() -> void
 EFactura.Net.Ubl.UblBankAccount
 EFactura.Net.Ubl.UblBankAccount.<Clone>$() -> EFactura.Net.Ubl.UblBankAccount!
-EFactura.Net.Ubl.UblBankAccount.BankName.get -> string?
-EFactura.Net.Ubl.UblBankAccount.BankName.init -> void
 EFactura.Net.Ubl.UblBankAccount.Equals(EFactura.Net.Ubl.UblBankAccount? other) -> bool
 EFactura.Net.Ubl.UblBankAccount.Iban.get -> string!
 EFactura.Net.Ubl.UblBankAccount.Iban.init -> void
@@ -77,6 +75,10 @@ EFactura.Net.Ubl.UblLine.Quantity.get -> decimal
 EFactura.Net.Ubl.UblLine.Quantity.init -> void
 EFactura.Net.Ubl.UblLine.TaxCategory.get -> EFactura.Net.Ubl.UblTaxCategory
 EFactura.Net.Ubl.UblLine.TaxCategory.init -> void
+EFactura.Net.Ubl.UblLine.TaxExemptionReason.get -> string?
+EFactura.Net.Ubl.UblLine.TaxExemptionReason.init -> void
+EFactura.Net.Ubl.UblLine.TaxExemptionReasonCode.get -> string?
+EFactura.Net.Ubl.UblLine.TaxExemptionReasonCode.init -> void
 EFactura.Net.Ubl.UblLine.TaxRate.get -> decimal
 EFactura.Net.Ubl.UblLine.TaxRate.init -> void
 EFactura.Net.Ubl.UblLine.UblLine() -> void
@@ -114,11 +116,16 @@ EFactura.Net.Ubl.UblTaxCategory.NotSubject = 4 -> EFactura.Net.Ubl.UblTaxCategor
 EFactura.Net.Ubl.UblTaxCategory.ReverseCharge = 2 -> EFactura.Net.Ubl.UblTaxCategory
 EFactura.Net.Ubl.UblTaxCategory.StandardRate = 0 -> EFactura.Net.Ubl.UblTaxCategory
 EFactura.Net.Ubl.UblTaxCategory.ZeroRated = 1 -> EFactura.Net.Ubl.UblTaxCategory
+EFactura.Net.Ubl.UblTaxCategoryExtensions
 EFactura.Net.Ubl.UblTaxSubtotal
 EFactura.Net.Ubl.UblTaxSubtotal.<Clone>$() -> EFactura.Net.Ubl.UblTaxSubtotal!
 EFactura.Net.Ubl.UblTaxSubtotal.Category.get -> EFactura.Net.Ubl.UblTaxCategory
 EFactura.Net.Ubl.UblTaxSubtotal.Category.init -> void
 EFactura.Net.Ubl.UblTaxSubtotal.Equals(EFactura.Net.Ubl.UblTaxSubtotal? other) -> bool
+EFactura.Net.Ubl.UblTaxSubtotal.ExemptionReason.get -> string?
+EFactura.Net.Ubl.UblTaxSubtotal.ExemptionReason.init -> void
+EFactura.Net.Ubl.UblTaxSubtotal.ExemptionReasonCode.get -> string?
+EFactura.Net.Ubl.UblTaxSubtotal.ExemptionReasonCode.init -> void
 EFactura.Net.Ubl.UblTaxSubtotal.Percent.get -> decimal
 EFactura.Net.Ubl.UblTaxSubtotal.Percent.init -> void
 EFactura.Net.Ubl.UblTaxSubtotal.TaxAmount.get -> decimal
@@ -239,6 +246,8 @@ static EFactura.Net.Ubl.UblParty.operator !=(EFactura.Net.Ubl.UblParty? left, EF
 static EFactura.Net.Ubl.UblParty.operator ==(EFactura.Net.Ubl.UblParty? left, EFactura.Net.Ubl.UblParty? right) -> bool
 static EFactura.Net.Ubl.UblPaymentMeans.operator !=(EFactura.Net.Ubl.UblPaymentMeans? left, EFactura.Net.Ubl.UblPaymentMeans? right) -> bool
 static EFactura.Net.Ubl.UblPaymentMeans.operator ==(EFactura.Net.Ubl.UblPaymentMeans? left, EFactura.Net.Ubl.UblPaymentMeans? right) -> bool
+static EFactura.Net.Ubl.UblTaxCategoryExtensions.DefaultExemptionReason(this EFactura.Net.Ubl.UblTaxCategory category) -> string?
+static EFactura.Net.Ubl.UblTaxCategoryExtensions.RequiresExemptionReason(this EFactura.Net.Ubl.UblTaxCategory category) -> bool
 static EFactura.Net.Ubl.UblTaxSubtotal.operator !=(EFactura.Net.Ubl.UblTaxSubtotal? left, EFactura.Net.Ubl.UblTaxSubtotal? right) -> bool
 static EFactura.Net.Ubl.UblTaxSubtotal.operator ==(EFactura.Net.Ubl.UblTaxSubtotal? left, EFactura.Net.Ubl.UblTaxSubtotal? right) -> bool
 static EFactura.Net.Ubl.UblTotals.Calculate(EFactura.Net.Ubl.UblDocument! document) -> EFactura.Net.Ubl.UblTotalsResult!

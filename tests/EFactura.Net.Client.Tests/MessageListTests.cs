@@ -9,12 +9,12 @@ public class ListMessagesTests
     {
         using var mock = new MockHttpMessageHandler();
         mock.Expect(HttpMethod.Get, "https://api.anaf.ro/test/FCTEL/rest/listaMesajeFactura")
-            .WithExactQueryString("zile=7&cif=12345678")
+            .WithExactQueryString("zile=7&cif=12345674")
             .Respond(() => Task.FromResult(TestHarness.Json(Fixture.Read("lista-mesaje.json"))));
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        await client.ListMessagesAsync("12345678", 7);
+        await client.ListMessagesAsync("12345674", 7);
 
         mock.VerifyNoOutstandingExpectation();
     }
@@ -28,12 +28,12 @@ public class ListMessagesTests
     {
         using var mock = new MockHttpMessageHandler();
         mock.Expect(HttpMethod.Get, "https://api.anaf.ro/test/FCTEL/rest/listaMesajeFactura")
-            .WithExactQueryString($"zile=7&cif=12345678&filtru={expected}")
+            .WithExactQueryString($"zile=7&cif=12345674&filtru={expected}")
             .Respond(() => Task.FromResult(TestHarness.Json(Fixture.Read("lista-mesaje.json"))));
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        await client.ListMessagesAsync("12345678", 7, filter);
+        await client.ListMessagesAsync("12345674", 7, filter);
 
         mock.VerifyNoOutstandingExpectation();
     }
@@ -43,12 +43,12 @@ public class ListMessagesTests
     {
         using var mock = new MockHttpMessageHandler();
         mock.Expect(HttpMethod.Get, "https://api.anaf.ro/test/FCTEL/rest/listaMesajeFactura")
-            .WithExactQueryString("zile=7&cif=12345678")
+            .WithExactQueryString("zile=7&cif=12345674")
             .Respond(() => Task.FromResult(TestHarness.Json(Fixture.Read("lista-mesaje.json"))));
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        await client.ListMessagesAsync("12345678", 7, filter: null);
+        await client.ListMessagesAsync("12345674", 7, filter: null);
 
         mock.VerifyNoOutstandingExpectation();
     }
@@ -61,14 +61,14 @@ public class ListMessagesTests
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        var result = await client.ListMessagesAsync("12345678", 7);
+        var result = await client.ListMessagesAsync("12345674", 7);
 
         Assert.Equal(3, result.Messages.Count);
 
         var sent = result.Messages[0];
         Assert.Equal("9988776655", sent.Id);
         Assert.Equal("4455667788", sent.UploadIndex);
-        Assert.Equal("12345678", sent.Cif);
+        Assert.Equal("12345674", sent.Cif);
         Assert.Equal(AnafMessageType.SentInvoice, sent.Type);
         Assert.Equal("FACTURA TRIMISA", sent.RawType);
         Assert.Equal(new DateTimeOffset(2026, 1, 15, 12, 30, 0, TimeSpan.Zero), sent.CreatedAt);
@@ -85,7 +85,7 @@ public class ListMessagesTests
     public async Task Maps_message_types(string rawType, AnafMessageType expected)
     {
         var json = $$"""
-            { "mesaje": [ { "data_creare": "202601151230", "cif": "12345678",
+            { "mesaje": [ { "data_creare": "202601151230", "cif": "12345674",
               "id_solicitare": "1", "detalii": "x", "tip": "{{rawType}}", "id": "2" } ] }
             """;
 
@@ -94,7 +94,7 @@ public class ListMessagesTests
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        var result = await client.ListMessagesAsync("12345678", 7);
+        var result = await client.ListMessagesAsync("12345674", 7);
 
         Assert.Equal(expected, result.Messages[0].Type);
         Assert.Equal(rawType, result.Messages[0].RawType);
@@ -112,7 +112,7 @@ public class ListMessagesTests
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        var result = await client.ListMessagesAsync("12345678", 7);
+        var result = await client.ListMessagesAsync("12345674", 7);
 
         Assert.Empty(result.Messages);
         Assert.Contains("Nu exista mesaje", result.Error, StringComparison.Ordinal);
@@ -129,7 +129,7 @@ public class ListMessagesTests
         var client = TestHarness.CreateEFacturaClient(mock);
 
         await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
-            () => client.ListMessagesAsync("12345678", days));
+            () => client.ListMessagesAsync("12345674", days));
     }
 
     [Theory]
@@ -142,7 +142,7 @@ public class ListMessagesTests
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        var result = await client.ListMessagesAsync("12345678", days);
+        var result = await client.ListMessagesAsync("12345674", days);
 
         Assert.NotEmpty(result.Messages);
     }
@@ -159,12 +159,12 @@ public class PagedMessageTests
         using var mock = new MockHttpMessageHandler();
         mock.Expect(HttpMethod.Get, "https://api.anaf.ro/test/FCTEL/rest/listaMesajePaginatieFactura")
             .WithExactQueryString(
-                $"startTime={from.ToUnixTimeMilliseconds()}&endTime={to.ToUnixTimeMilliseconds()}&cif=12345678&pagina=1")
+                $"startTime={from.ToUnixTimeMilliseconds()}&endTime={to.ToUnixTimeMilliseconds()}&cif=12345674&pagina=1")
             .Respond(() => Task.FromResult(TestHarness.Json(Fixture.Read("lista-mesaje-single-page.json"))));
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        await foreach (var _ in client.ListMessagesPagedAsync("12345678", from, to))
+        await foreach (var _ in client.ListMessagesPagedAsync("12345674", from, to))
         {
             // drain
         }
@@ -185,7 +185,7 @@ public class PagedMessageTests
 
         var messages = new List<AnafMessage>();
         await foreach (var message in client.ListMessagesPagedAsync(
-                           "12345678",
+                           "12345674",
                            new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero),
                            new DateTimeOffset(2026, 1, 31, 0, 0, 0, TimeSpan.Zero)))
         {
@@ -212,7 +212,7 @@ public class PagedMessageTests
         var client = TestHarness.CreateEFacturaClient(mock);
 
         await foreach (var _ in client.ListMessagesPagedAsync(
-                           "12345678",
+                           "12345674",
                            new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero),
                            new DateTimeOffset(2026, 1, 31, 0, 0, 0, TimeSpan.Zero)))
         {
@@ -239,7 +239,7 @@ public class PagedMessageTests
 
         var messages = new List<AnafMessage>();
         await foreach (var message in client.ListMessagesPagedAsync(
-                           "12345678",
+                           "12345674",
                            new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero),
                            new DateTimeOffset(2026, 1, 31, 0, 0, 0, TimeSpan.Zero)))
         {
@@ -266,7 +266,7 @@ public class PagedMessageTests
         var client = TestHarness.CreateEFacturaClient(mock);
 
         await foreach (var _ in client.ListMessagesPagedAsync(
-                           "12345678",
+                           "12345674",
                            new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero),
                            new DateTimeOffset(2026, 1, 31, 0, 0, 0, TimeSpan.Zero)))
         {
@@ -285,7 +285,7 @@ public class PagedMessageTests
         await Assert.ThrowsAsync<ArgumentException>(async () =>
         {
             await foreach (var _ in client.ListMessagesPagedAsync(
-                               "12345678",
+                               "12345674",
                                new DateTimeOffset(2026, 1, 31, 0, 0, 0, TimeSpan.Zero),
                                new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero)))
             {
@@ -306,7 +306,7 @@ public class PagedMessageTests
         await Assert.ThrowsAnyAsync<OperationCanceledException>(async () =>
         {
             await foreach (var _ in client.ListMessagesPagedAsync(
-                               "12345678",
+                               "12345674",
                                new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero),
                                new DateTimeOffset(2026, 1, 31, 0, 0, 0, TimeSpan.Zero),
                                cancellationToken: cts.Token))
@@ -324,7 +324,7 @@ public class PagedMessageTests
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        var result = await client.ListMessagesAsync("12345678", 7);
+        var result = await client.ListMessagesAsync("12345674", 7);
 
         Assert.Equal(3, result.TotalRecords);
         Assert.Equal(2, result.TotalPages);

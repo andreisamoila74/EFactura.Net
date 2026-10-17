@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <header xmlns="mfp:anaf:dgti:spv:respUploadFisier:v1" dateResponse="202601151231" ExecutionStatus="1">
     <Errors errorMessage="Fisierul transmis nu este valid. Lipseste elementul obligatoriu cac:AccountingSupplierParty."/>
-    <Errors errorMessage="CIF-ul 12345678 nu figureaza inregistrat in SPV."/>
+    <Errors errorMessage="CIF-ul 12345674 nu figureaza inregistrat in SPV."/>
 </header>

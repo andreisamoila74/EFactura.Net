@@ -146,6 +146,18 @@ public sealed class AnafCompanyLookupClient : IAnafCompanyLookupClient
             .ConfigureAwait(false);
 
         var body = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+
+        // The registry answers "none of these identifiers exist" with 404 — and a perfectly good
+        // JSON body listing them under `notFound`. That is an outcome, not a transport failure, so
+        // it comes back as an empty result rather than an exception.
+        if (response.StatusCode == System.Net.HttpStatusCode.NotFound
+            && AnafCompanyParser.LooksLikeRegistryResponse(body))
+        {
+            Log.CompanyLookupBatch(_logger, batch.Length);
+
+            return [];
+        }
+
         HttpResponseGuard.EnsureSuccess(response, "company lookup", body);
 
         Log.CompanyLookupBatch(_logger, batch.Length);

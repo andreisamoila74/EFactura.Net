@@ -2,7 +2,7 @@
   "mesaje": [
     {
       "data_creare": "202601020800",
-      "cif": "12345678",
+      "cif": "12345674",
       "id_solicitare": "1000000001",
       "detalii": "Factura trimisa",
       "tip": "FACTURA TRIMISA",
@@ -10,7 +10,7 @@
     },
     {
       "data_creare": "202601030800",
-      "cif": "12345678",
+      "cif": "12345674",
       "id_solicitare": "1000000002",
       "detalii": "Factura trimisa",
       "tip": "FACTURA TRIMISA",

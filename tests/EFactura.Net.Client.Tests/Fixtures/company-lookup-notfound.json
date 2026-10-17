@@ -2,5 +2,5 @@
   "cod": 200,
   "message": "SUCCESS",
   "found": [],
-  "notFound": [ { "cui": 99999999, "data": "2026-01-15" } ]
+  "notFound": [ { "cui": 99999992, "data": "2026-01-15" } ]
 }

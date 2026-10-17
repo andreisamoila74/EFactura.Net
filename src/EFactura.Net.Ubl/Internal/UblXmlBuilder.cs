@@ -228,12 +228,40 @@ internal static class UblXmlBuilder
             }
         }
 
-        return new XElement(
-            Cac + "PostalAddress",
-            new XElement(Cbc + "StreetName", address.StreetName ?? ""),
-            new XElement(Cbc + "CityName", RomanianAddress.NormalizeCityName(address.CityName)),
-            new XElement(Cbc + "CountrySubentity", countyCode),
-            new XElement(Cac + "Country", new XElement(Cbc + "IdentificationCode", address.CountryCode)));
+        // CIUS-RO BR-RO-080 and BR-RO-090 require a street line and a city with actual content.
+        // An empty element fails those rules just as a missing one does, and is uglier, so omit it
+        // and let strict mode tell the caller about it before ANAF does.
+        var city = RomanianAddress.NormalizeCityName(address.CityName);
+
+        if (options.StrictAddressValidation)
+        {
+            if (string.IsNullOrWhiteSpace(address.StreetName))
+            {
+                errors.Add("Address is missing a street line (BT-35 / BT-50, CIUS-RO BR-RO-080).");
+            }
+
+            if (string.IsNullOrWhiteSpace(city))
+            {
+                errors.Add("Address is missing a city (BT-37 / BT-52, CIUS-RO BR-RO-090).");
+            }
+        }
+
+        var content = new List<object?>();
+
+        if (!string.IsNullOrWhiteSpace(address.StreetName))
+        {
+            content.Add(new XElement(Cbc + "StreetName", address.StreetName));
+        }
+
+        if (!string.IsNullOrWhiteSpace(city))
+        {
+            content.Add(new XElement(Cbc + "CityName", city));
+        }
+
+        content.Add(new XElement(Cbc + "CountrySubentity", countyCode));
+        content.Add(new XElement(Cac + "Country", new XElement(Cbc + "IdentificationCode", address.CountryCode)));
+
+        return new XElement(Cac + "PostalAddress", content);
     }
 
     private static XElement? PaymentMeans(UblPaymentMeans? paymentMeans)
@@ -249,18 +277,11 @@ internal static class UblXmlBuilder
 
         if (paymentMeans.PayeeAccount is { } account)
         {
-            var payee = new XElement(
+            // IBAN only: CIUS-RO UBL-CR-429 forbids FinancialInstitutionBranch/Name on an invoice,
+            // and ANAF's validator rejects documents that carry it.
+            element.Add(new XElement(
                 Cac + "PayeeFinancialAccount",
-                new XElement(Cbc + "ID", NormalizeIban(account.Iban)));
-
-            if (!string.IsNullOrWhiteSpace(account.BankName))
-            {
-                payee.Add(new XElement(
-                    Cac + "FinancialInstitutionBranch",
-                    new XElement(Cbc + "Name", account.BankName)));
-            }
-
-            element.Add(payee);
+                new XElement(Cbc + "ID", NormalizeIban(account.Iban))));
         }
 
         return element;
@@ -288,15 +309,36 @@ internal static class UblXmlBuilder
 
         foreach (var subtotal in totals.TaxSubtotals)
         {
+            var category = new XElement(
+                Cac + "TaxCategory",
+                new XElement(Cbc + "ID", TaxCategoryCode(subtotal.Category)),
+                new XElement(Cbc + "Percent", FormatAmount(subtotal.Percent)));
+
+            // BR-AE-10 / BR-E-10 / BR-O-10 / BR-IC-10 / BR-G-10: a breakdown that carries no VAT
+            // must say why. Falling back to the standard wording keeps the document acceptable when
+            // the caller supplied nothing, rather than letting ANAF reject it.
+            if (subtotal.Category.RequiresExemptionReason())
+            {
+                if (!string.IsNullOrWhiteSpace(subtotal.ExemptionReasonCode))
+                {
+                    category.Add(new XElement(Cbc + "TaxExemptionReasonCode", subtotal.ExemptionReasonCode));
+                }
+
+                var reason = subtotal.ExemptionReason ?? subtotal.Category.DefaultExemptionReason();
+
+                if (!string.IsNullOrWhiteSpace(reason))
+                {
+                    category.Add(new XElement(Cbc + "TaxExemptionReason", reason));
+                }
+            }
+
+            category.Add(new XElement(Cac + "TaxScheme", new XElement(Cbc + "ID", "VAT")));
+
             element.Add(new XElement(
                 Cac + "TaxSubtotal",
                 Amount(Cbc + "TaxableAmount", subtotal.TaxableAmount, currency),
                 Amount(Cbc + "TaxAmount", subtotal.TaxAmount, currency),
-                new XElement(
-                    Cac + "TaxCategory",
-                    new XElement(Cbc + "ID", TaxCategoryCode(subtotal.Category)),
-                    new XElement(Cbc + "Percent", FormatAmount(subtotal.Percent)),
-                    new XElement(Cac + "TaxScheme", new XElement(Cbc + "ID", "VAT")))));
+                category));
         }
 
         return element;

@@ -40,7 +40,7 @@ public static class UblTotals
 
         // Keyed by (category, rate); the list preserves first-appearance order.
         var order = new List<(UblTaxCategory Category, decimal Rate)>();
-        var groups = new Dictionary<(UblTaxCategory, decimal), (decimal Taxable, decimal Tax)>();
+        var groups = new Dictionary<(UblTaxCategory, decimal), Group>();
 
         foreach (var line in document.Lines)
         {
@@ -53,10 +53,19 @@ public static class UblTotals
             if (!groups.TryGetValue(key, out var current))
             {
                 order.Add(key);
-                current = (0m, 0m);
+                current = new Group();
             }
 
-            groups[key] = (current.Taxable + lineTotal, current.Tax + lineTax);
+            groups[key] = current with
+            {
+                Taxable = current.Taxable + lineTotal,
+                Tax = current.Tax + lineTax,
+
+                // A breakdown carries one reason. The first line that states one wins, so a single
+                // annotated line is enough to justify the whole group.
+                Reason = current.Reason ?? NullIfBlank(line.TaxExemptionReason),
+                ReasonCode = current.ReasonCode ?? NullIfBlank(line.TaxExemptionReasonCode),
+            };
         }
 
         var subtotals = new List<UblTaxSubtotal>(order.Count);
@@ -64,15 +73,17 @@ public static class UblTotals
 
         foreach (var key in order)
         {
-            var (taxable, tax) = groups[key];
-            taxAmount += tax;
+            var group = groups[key];
+            taxAmount += group.Tax;
 
             subtotals.Add(new UblTaxSubtotal
             {
                 Category = key.Category,
                 Percent = key.Rate,
-                TaxableAmount = taxable,
-                TaxAmount = tax,
+                TaxableAmount = group.Taxable,
+                TaxAmount = group.Tax,
+                ExemptionReason = group.Reason,
+                ExemptionReasonCode = group.ReasonCode,
             });
         }
 
@@ -89,6 +100,20 @@ public static class UblTotals
 
     internal static decimal Round(decimal value) =>
         Math.Round(value, MonetaryDecimals, MidpointRounding.AwayFromZero);
+
+    private static string? NullIfBlank(string? value) =>
+        string.IsNullOrWhiteSpace(value) ? null : value;
+
+    private readonly record struct Group
+    {
+        internal decimal Taxable { get; init; }
+
+        internal decimal Tax { get; init; }
+
+        internal string? Reason { get; init; }
+
+        internal string? ReasonCode { get; init; }
+    }
 }
 
 /// <summary>The computed totals of a document.</summary>
@@ -130,4 +155,13 @@ public sealed record UblTaxSubtotal
 
     /// <summary>The VAT category (BT-118).</summary>
     public required UblTaxCategory Category { get; init; }
+
+    /// <summary>
+    /// Why this breakdown carries no VAT (BT-120), taken from the first line in the group that
+    /// supplied one.
+    /// </summary>
+    public string? ExemptionReason { get; init; }
+
+    /// <summary>Coded reason for the exemption (BT-121).</summary>
+    public string? ExemptionReasonCode { get; init; }
 }

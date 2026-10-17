@@ -41,6 +41,31 @@ public sealed record UblLine
     public UblTaxCategory TaxCategory { get; init; } = UblTaxCategory.StandardRate;
 
     /// <summary>
+    /// Why this line carries no VAT (BT-120) — for example <c>"Taxare inversă conform art. 331 Cod
+    /// Fiscal"</c>.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// EN 16931 requires a reason on every VAT breakdown whose category is reverse charge, exempt,
+    /// not-subject, intra-community or export (rules <c>BR-AE-10</c>, <c>BR-E-10</c>, <c>BR-O-10</c>,
+    /// <c>BR-IC-10</c>, <c>BR-G-10</c>). ANAF rejects documents that omit it.
+    /// </para>
+    /// <para>
+    /// Leave it <see langword="null"/> and a generic standard text is emitted so the document is
+    /// still accepted — but supply the actual legal basis whenever you have it, because the generic
+    /// wording tells the buyer's accountant nothing.
+    /// </para>
+    /// </remarks>
+    public string? TaxExemptionReason { get; init; }
+
+    /// <summary>
+    /// Coded reason for the VAT exemption (BT-121), from the CEF VATEX code list — for example
+    /// <c>"VATEX-EU-AE"</c>.
+    /// </summary>
+    /// <remarks>Optional. Supplying either this or <see cref="TaxExemptionReason"/> satisfies the rule.</remarks>
+    public string? TaxExemptionReasonCode { get; init; }
+
+    /// <summary>
     /// Item description (BT-154), written to <c>cac:Item/cbc:Description</c>. Omitted when
     /// <see langword="null"/>.
     /// </summary>

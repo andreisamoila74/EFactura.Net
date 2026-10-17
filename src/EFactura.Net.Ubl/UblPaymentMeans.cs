@@ -16,6 +16,11 @@ public sealed record UblPaymentMeans
 }
 
 /// <summary>A bank account (BG-17), written to <c>cac:PayeeFinancialAccount</c>.</summary>
+/// <remarks>
+/// Only the IBAN is carried. CIUS-RO rule <c>UBL-CR-429</c> forbids
+/// <c>cac:FinancialInstitutionBranch/cbc:Name</c> on an invoice, and ANAF's validator rejects any
+/// document containing it — so there is deliberately no bank-name property to set.
+/// </remarks>
 public sealed record UblBankAccount
 {
     /// <summary>
@@ -27,10 +32,4 @@ public sealed record UblBankAccount
     /// is accepted.
     /// </remarks>
     public required string Iban { get; init; }
-
-    /// <summary>
-    /// Bank name (BT-86), written to <c>cac:FinancialInstitutionBranch/cbc:Name</c>. Omitted when
-    /// <see langword="null"/> or empty.
-    /// </summary>
-    public string? BankName { get; init; }
 }

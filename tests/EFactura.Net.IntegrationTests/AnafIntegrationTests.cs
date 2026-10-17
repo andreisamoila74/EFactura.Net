@@ -23,7 +23,7 @@ public class ValidationEndpointTests
     [InlineData("ReverseCharge")]
     [InlineData("Exempt")]
     [InlineData("MixedTaxCategories")]
-    [InlineData("WithBankName")]
+    [InlineData("WithPaymentMeans")]
     public async Task Anaf_accepts_the_generated_invoice(string scenario)
     {
         var xml = UblWriter.Write(IntegrationDocuments.Invoice(scenario));
@@ -112,7 +112,7 @@ public class CompanyLookupEndpointTests
         var client = new AnafCompanyLookupClient(new HttpClient { Timeout = TimeSpan.FromSeconds(60) });
 
         var company = await client.GetByCuiAsync(
-            "99999999",
+            "99999992",
             cancellationToken: TestContext.Current.CancellationToken);
 
         Assert.Null(company);

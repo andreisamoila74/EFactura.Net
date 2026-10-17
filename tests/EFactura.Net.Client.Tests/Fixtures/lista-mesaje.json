@@ -2,23 +2,23 @@
   "mesaje": [
     {
       "data_creare": "202601151230",
-      "cif": "12345678",
+      "cif": "12345674",
       "id_solicitare": "4455667788",
-      "detalii": "Factura cu id_incarcare=4455667788 emisa de cif_emitent=12345678 pentru cif_beneficiar=87654321",
+      "detalii": "Factura cu id_incarcare=4455667788 emisa de cif_emitent=12345674 pentru cif_beneficiar=87654329",
       "tip": "FACTURA TRIMISA",
       "id": "9988776655"
     },
     {
       "data_creare": "202601160915",
-      "cif": "12345678",
+      "cif": "12345674",
       "id_solicitare": "4455667799",
-      "detalii": "Factura cu id_incarcare=4455667799 emisa de cif_emitent=87654321 pentru cif_beneficiar=12345678",
+      "detalii": "Factura cu id_incarcare=4455667799 emisa de cif_emitent=87654329 pentru cif_beneficiar=12345674",
       "tip": "FACTURA PRIMITA",
       "id": "9988776677"
     },
     {
       "data_creare": "202601161045",
-      "cif": "12345678",
+      "cif": "12345674",
       "id_solicitare": "4455667800",
       "detalii": "Erori de validare identificate la factura transmisa cu id_incarcare=4455667800",
       "tip": "ERORI FACTURA",
@@ -26,6 +26,6 @@
     }
   ],
   "serial": "1234AA456",
-  "cui": "12345678",
-  "titlu": "Lista Mesaje disponibile pentru cif_consultat=12345678 in ultimele 7 zile"
+  "cui": "12345674",
+  "titlu": "Lista Mesaje disponibile pentru cif_consultat=12345674 in ultimele 7 zile"
 }

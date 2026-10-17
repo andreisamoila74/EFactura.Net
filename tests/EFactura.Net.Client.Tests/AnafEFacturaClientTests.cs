@@ -10,12 +10,12 @@ public class UploadTests
     {
         using var mock = new MockHttpMessageHandler();
         mock.Expect(HttpMethod.Post, "https://api.anaf.ro/test/FCTEL/rest/upload")
-            .WithExactQueryString("standard=UBL&cif=12345678")
+            .WithExactQueryString("standard=UBL&cif=12345674")
             .Respond(() => Task.FromResult(TestHarness.Xml(Fixture.Read("upload-ok.xml"))));
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        await client.UploadAsync("12345678", "<Invoice/>", AnafUploadStandard.Ubl);
+        await client.UploadAsync("12345674", "<Invoice/>", AnafUploadStandard.Ubl);
 
         mock.VerifyNoOutstandingExpectation();
     }
@@ -25,12 +25,12 @@ public class UploadTests
     {
         using var mock = new MockHttpMessageHandler();
         mock.Expect(HttpMethod.Post, "https://api.anaf.ro/test/FCTEL/rest/upload")
-            .WithExactQueryString("standard=UBL&cif=12345678")
+            .WithExactQueryString("standard=UBL&cif=12345674")
             .Respond(() => Task.FromResult(TestHarness.Xml(Fixture.Read("upload-ok.xml"))));
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        await client.UploadAsync("RO 12345678", "<Invoice/>", AnafUploadStandard.Ubl);
+        await client.UploadAsync("RO 12345674", "<Invoice/>", AnafUploadStandard.Ubl);
 
         mock.VerifyNoOutstandingExpectation();
     }
@@ -44,12 +44,12 @@ public class UploadTests
     {
         using var mock = new MockHttpMessageHandler();
         mock.Expect(HttpMethod.Post, "https://api.anaf.ro/test/FCTEL/rest/upload")
-            .WithExactQueryString($"standard={expected}&cif=12345678")
+            .WithExactQueryString($"standard={expected}&cif=12345674")
             .Respond(() => Task.FromResult(TestHarness.Xml(Fixture.Read("upload-ok.xml"))));
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        await client.UploadAsync("12345678", "<Invoice/>", standard);
+        await client.UploadAsync("12345674", "<Invoice/>", standard);
 
         mock.VerifyNoOutstandingExpectation();
     }
@@ -66,7 +66,7 @@ public class UploadTests
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        await client.UploadAsync("12345678", Xml, AnafUploadStandard.Ubl);
+        await client.UploadAsync("12345674", Xml, AnafUploadStandard.Ubl);
 
         mock.VerifyNoOutstandingExpectation();
     }
@@ -81,7 +81,7 @@ public class UploadTests
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        await client.UploadAsync("12345678", "<Invoice/>", AnafUploadStandard.Ubl);
+        await client.UploadAsync("12345674", "<Invoice/>", AnafUploadStandard.Ubl);
 
         mock.VerifyNoOutstandingExpectation();
     }
@@ -91,13 +91,13 @@ public class UploadTests
     {
         using var mock = new MockHttpMessageHandler();
         mock.Expect(HttpMethod.Post, "https://api.anaf.ro/test/FCTEL/rest/upload")
-            .WithExactQueryString("standard=UBL&cif=12345678&extern=DA&autofactura=DA&executare=DA")
+            .WithExactQueryString("standard=UBL&cif=12345674&extern=DA&autofactura=DA&executare=DA")
             .Respond(() => Task.FromResult(TestHarness.Xml(Fixture.Read("upload-ok.xml"))));
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
         await client.UploadAsync(
-            "12345678",
+            "12345674",
             "<Invoice/>",
             AnafUploadStandard.Ubl,
             new AnafUploadOptions { ForeignBuyer = true, SelfBilled = true, Enforcement = true });
@@ -113,7 +113,7 @@ public class UploadTests
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        var result = await client.UploadAsync("12345678", "<Invoice/>", AnafUploadStandard.Ubl);
+        var result = await client.UploadAsync("12345674", "<Invoice/>", AnafUploadStandard.Ubl);
 
         Assert.True(result.IsSuccess);
         Assert.Equal("4455667788", result.UploadIndex);
@@ -134,7 +134,7 @@ public class UploadTests
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        var result = await client.UploadAsync("12345678", "<Invoice/>", AnafUploadStandard.Ubl);
+        var result = await client.UploadAsync("12345674", "<Invoice/>", AnafUploadStandard.Ubl);
 
         Assert.False(result.IsSuccess);
         Assert.Null(result.UploadIndex);
@@ -156,7 +156,7 @@ public class UploadTests
 
         var client = TestHarness.CreateEFacturaClient(mock);
 
-        var result = await client.UploadAsync("12345678", "<Invoice/>", AnafUploadStandard.Ubl);
+        var result = await client.UploadAsync("12345674", "<Invoice/>", AnafUploadStandard.Ubl);
 
         Assert.False(result.IsSuccess);
         var error = Assert.Single(result.Errors);
@@ -172,7 +172,7 @@ public class UploadTests
         await Assert.ThrowsAsync<ArgumentException>(
             () => client.UploadAsync("", "<Invoice/>", AnafUploadStandard.Ubl));
         await Assert.ThrowsAsync<ArgumentException>(
-            () => client.UploadAsync("12345678", "  ", AnafUploadStandard.Ubl));
+            () => client.UploadAsync("12345674", "  ", AnafUploadStandard.Ubl));
     }
 }
 
@@ -532,7 +532,7 @@ public class CancellationTests
         await cts.CancelAsync();
 
         await Assert.ThrowsAnyAsync<OperationCanceledException>(
-            () => client.UploadAsync("12345678", "<Invoice/>", AnafUploadStandard.Ubl, null, cts.Token));
+            () => client.UploadAsync("12345674", "<Invoice/>", AnafUploadStandard.Ubl, null, cts.Token));
     }
 
     [Fact]
