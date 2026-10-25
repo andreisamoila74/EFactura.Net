@@ -13,6 +13,13 @@
     <!-- Test assemblies are not a public API surface. -->
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
+
+    <!--
+      Test assemblies are never packed or published, so deterministic source paths buy nothing
+      here — and they actively hurt: CI stack traces come back as "/_/tests/..." instead of real
+      files, and anything reading [CallerFilePath] gets a placeholder that points nowhere.
+    -->
+    <DeterministicSourcePaths>false</DeterministicSourcePaths>
   </PropertyGroup>
 
   <ItemGroup>

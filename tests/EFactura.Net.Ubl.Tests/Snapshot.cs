@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace EFactura.Net.Ubl.Tests;
@@ -28,9 +27,38 @@ internal static class Snapshot
     private static bool AutoAccept =>
         Environment.GetEnvironmentVariable("EFACTURA_ACCEPT_SNAPSHOTS") == "1";
 
-    internal static void Matches(string actual, string snapshotName, [CallerFilePath] string callerPath = "")
+    /// <summary>
+    /// Where the committed <c>.verified.xml</c> files live, found by walking up from the test
+    /// binaries to the directory holding the project file.
+    /// </summary>
+    /// <remarks>
+    /// Deliberately *not* <c>[CallerFilePath]</c>. That is baked in at compile time, and a
+    /// deterministic build — which is what <c>ContinuousIntegrationBuild=true</c> turns on in CI —
+    /// rewrites it to a placeholder like <c>/_/tests/…</c>. The result points nowhere: on Linux it
+    /// fails with "Access to the path '/_' is denied", and on Windows it silently creates
+    /// <c>C:\_\tests\…</c> and writes the snapshots there, which is worse.
+    /// </remarks>
+    internal static readonly Lazy<string> SnapshotDirectory = new(ResolveSnapshotDirectory);
+
+    private static string ResolveSnapshotDirectory()
     {
-        var directory = Path.Combine(Path.GetDirectoryName(callerPath)!, "Snapshots");
+        // AppContext.BaseDirectory is <project>/bin/<configuration>/<tfm>/.
+        for (var dir = new DirectoryInfo(AppContext.BaseDirectory); dir is not null; dir = dir.Parent)
+        {
+            if (dir.GetFiles("*.csproj").Length > 0)
+            {
+                return Path.Combine(dir.FullName, "Snapshots");
+            }
+        }
+
+        throw new InvalidOperationException(
+            $"Could not locate the test project directory by walking up from '{AppContext.BaseDirectory}'. "
+            + "Snapshot tests need the source tree alongside the compiled tests.");
+    }
+
+    internal static void Matches(string actual, string snapshotName)
+    {
+        var directory = SnapshotDirectory.Value;
         Directory.CreateDirectory(directory);
 
         var verifiedPath = Path.Combine(directory, $"{snapshotName}.verified.xml");
