@@ -1,0 +1,132 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # MinVer derives the version from tags, so a shallow clone would produce 0.0.0.
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          # The SDK comes from global.json; the .NET 8 runtime is needed to *run* the
+          # net8.0 half of the test matrix.
+          dotnet-version: |
+            8.0.x
+          global-json-file: global.json
+
+      - run: dotnet restore
+
+      - name: Build
+        # Warnings are errors, so this also enforces the public-API lock and XML docs.
+        run: dotnet build -c Release --no-restore
+
+      - name: Test
+        run: dotnet test -c Release --no-build -- --coverage --coverage-output-format cobertura
+
+      - name: Pack
+        run: dotnet pack -c Release --no-build -o artifacts
+
+      - name: Upload packages
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: artifacts/*
+          if-no-files-found: error
+
+      - name: Upload coverage
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: "**/*.cobertura.xml"
+          if-no-files-found: warn
+
+  samples:
+    name: samples build and run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+          global-json-file: global.json
+
+      # Every snippet in docs/ has a compiled counterpart here, so this is what keeps the
+      # documentation from drifting away from code that builds.
+      - run: dotnet run --project samples/EFactura.Net.Samples.Console -c Release -- build
+
+  integration:
+    name: ANAF integration
+    # Push events only: a pull_request from a fork must never reach this job, and ANAF
+    # should not be called on every PR push.
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+          global-json-file: global.json
+
+      - name: Integration tests against live ANAF
+        env:
+          # Enables the tests that need no credentials — ANAF's validator, the XML-to-PDF
+          # converter and the public company registry. These are the only check that ANAF
+          # itself still accepts the documents this library generates.
+          ANAF_INTEGRATION: "1"
+          # Optional. When unset, the upload round trip skips itself with a stated reason.
+          ANAF_TEST_ACCESS_TOKEN: ${{ secrets.ANAF_TEST_ACCESS_TOKEN }}
+          ANAF_TEST_CIF: ${{ secrets.ANAF_TEST_CIF }}
+        run: dotnet test tests/EFactura.Net.IntegrationTests -c Release
+
+  secrets:
+    name: secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # The binary straight from the release, rather than the marketplace action, which
+      # requires a licence key for organisation-owned repositories.
+      - name: Install gitleaks
+        env:
+          GITLEAKS_VERSION: 8.30.1
+        run: |
+          curl -sSL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      - name: Scan working tree
+        run: gitleaks dir . --redact -v
+
+      - name: Scan git history
+        run: gitleaks git . --redact -v

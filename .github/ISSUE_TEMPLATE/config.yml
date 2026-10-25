@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/andreisamoila74/EFactura.Net/security/advisories/new
+    about: Report privately. Please do not open a public issue.
+  - name: ANAF's own specification
+    url: https://mfinante.gov.ro/ro/web/efactura
+    about: Questions about the e-Factura rules themselves, rather than this library.

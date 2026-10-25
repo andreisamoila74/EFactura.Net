@@ -1,0 +1,32 @@
+version: 2
+
+updates:
+  - package-ecosystem: nuget
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      # The Microsoft.Extensions.* packages move together; one PR per week rather
+      # than four is easier to review and to revert.
+      microsoft-extensions:
+        patterns: ["Microsoft.Extensions.*"]
+      test-dependencies:
+        patterns: ["xunit*", "RichardSzalay.MockHttp", "Microsoft.Testing.*"]
+    ignore:
+      # Deliberately pinned to the 8.0.x line: it is the lowest version carrying what
+      # the client needs, and raising it would force every net8.0 consumer to lift
+      # their own Extensions graph. Revisit only with a reason.
+      - dependency-name: "Microsoft.Extensions.*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "chore(ci)"

@@ -1,0 +1,35 @@
+name: Feature request
+description: Something this library should do and does not.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The README's roadmap lists what is already planned — Schematron validation,
+        reading documents, allowances and charges, payment terms, further document types.
+        Adding a comment to an existing issue is more useful than a new one.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: The problem, rather than the solution you have in mind.
+    validations: { required: true }
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would it look like?
+      description: API sketch, if you have one in mind.
+      render: csharp
+
+  - type: input
+    id: spec
+    attributes:
+      label: Relevant EN 16931 / CIUS-RO reference
+      placeholder: "BT-20, BG-20, rule BR-CO-25, ..."
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: How are you working around it today?
