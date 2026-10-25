@@ -20,7 +20,7 @@ jobs:
       url: https://www.nuget.org/packages/EFactura.Net.Client
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # MinVer reads the tag to derive the package version.
           fetch-depth: 0
